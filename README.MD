@@ -1,48 +1,21 @@
-# fedlify-frontend
+## What is Fedlify?
 
-<div align="center" style="margin: 30px;">
-    <a href="https://refine.dev">
-    <img alt="refine logo" src="https://refine.ams3.cdn.digitaloceanspaces.com/readme/refine-readme-banner.png">
-    </a>
-</div>
-<br/>
+**Fedlify** is an open, intelligent platform that enables teams and institutions to collaboratively train machine learning models **without sharing raw data**.
+By simplifying federated learning, Fedlify empowers privacy-preserving AI development that’s scalable, reproducible, and ethical.
 
-This [Refine](https://github.com/refinedev/refine) project was generated with [create refine-app](https://github.com/refinedev/refine/tree/master/packages/create-refine-app).
+## Who is Fedlify for?
 
-## Getting Started
+* **Researchers** working with sensitive or distributed datasets (e.g., in healthcare or education)
+* **Organizations** that want to collaborate across data silos while maintaining control over their data
+* **Developers** building privacy-focused AI applications
+* **Institutions** aiming to adopt secure, decentralized model training workflows
 
-A React Framework for building internal tools, admin panels, dashboards & B2B apps with unmatched flexibility ✨
+## How to Get Started
 
-Refine's hooks and components simplifies the development process and eliminates the repetitive tasks by providing industry-standard solutions for crucial aspects of a project, including authentication, access control, routing, networking, state management, and i18n.
+We're actively building toward our first public release. For now:
 
-## Available Scripts
+* [Frontend (this repo)](https://github.com/fedlify/fedlify-frontend): React-based UI for the platform
+* [Backend (coming soon)](https://github.com/fedlify/fedlify-backend): API and orchestration layer for training and collaboration
+* Deployment: Visit [https://ww.fedlify.com](https://www.fedlify.com) for the latest build
 
-### Running the development server.
-
-```bash
-    npm run dev
-```
-
-### Building for production.
-
-```bash
-    npm run build
-```
-
-### Running the production server.
-
-```bash
-    npm run start
-```
-
-## Learn More
-
-To learn more about **Refine**, please check out the [Documentation](https://refine.dev/docs)
-
-- **REST Data Provider** [Docs](https://refine.dev/docs/core/providers/data-provider/#overview)
-- **Ant Design** [Docs](https://refine.dev/docs/ui-frameworks/antd/tutorial/)
-- **React Router** [Docs](https://refine.dev/docs/core/providers/router-provider/)
-
-## License
-
-MIT
+👉 **Coming Soon**: Complete developer setup instructions, starter templates, and backend SDKs.
