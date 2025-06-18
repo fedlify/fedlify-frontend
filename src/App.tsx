@@ -14,8 +14,18 @@ import { App as AntdApp } from "antd";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { ColorModeContextProvider } from "./contexts/color-mode";
 import HomePage from "./pages/home";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t, i18n } = useTranslation();
+
+  const i18nProvider = {
+    translate: (key: string, params: object) => t(key, params),
+    changeLocale: (lang: string) => i18n.changeLanguage(lang),
+    getLocale: () => i18n.language,
+  };
+
+
   return (
     <BrowserRouter>
       <RefineKbarProvider>
@@ -26,6 +36,7 @@ function App() {
                 dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
+                i18nProvider={i18nProvider}
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
@@ -35,7 +46,6 @@ function App() {
               >
                 <Routes>
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/home" element={<HomePage />} />
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />

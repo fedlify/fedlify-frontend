@@ -1,10 +1,13 @@
 import React from 'react';
 import { Typography, Card, Row, Col, Button, Space } from 'antd';
 import { HomeOutlined, RocketOutlined, StarOutlined } from '@ant-design/icons';
+import { useDocumentTitle } from "@refinedev/react-router";
 
 const { Title, Paragraph } = Typography;
 
 const HomePage: React.FC = () => {
+    useDocumentTitle({ i18nKey: "pages.home.title" });
+
     return (
         <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
             {/* Hero Section */}
