@@ -13,6 +13,7 @@ import dataProvider from "@refinedev/simple-rest";
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { ColorModeContextProvider } from "./contexts/color-mode";
+import HomePage from "./pages/home";
 
 function App() {
   return (
@@ -33,7 +34,8 @@ function App() {
                 }}
               >
                 <Routes>
-                  <Route index element={<div>The App</div>} />
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/home" element={<HomePage />} />
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
