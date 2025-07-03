@@ -1,0 +1,57 @@
+.ant-table-wrapper .ant-table {
+    border-radius: 8px;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr:last-child > td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr:last-child > td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+.ant-pagination {
+    display: flex;
+    align-items: center;
+}
+
+.ant-table-pagination.ant-pagination {
+    border-radius: 0px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.ant-pagination-total-text {
+    margin-right: auto !important;
+    font-size: 14px !important;
+    margin-inline-end: auto !important;
+}
+
+.ant-col {
+    height: 100%;
+}
+
+html[data-theme="dark"] {
+    .ant-table-filter-dropdown {
+        background-color: #000;
+    }
+}
+
+/* This will hide all Tooltip arrows */
+.ant-tooltip-arrow {
+    display: none !important;
+}
+
+[data-theme=dark] {
+    color: #fff; /* Fallback for older Safari */
+    background-color: #000; /* Fallback for older Safari */
+    color-scheme: dark
+}
+
+* {
+    scrollbar-width: thin; /* For Firefox */
+}
+  
+*::-webkit-scrollbar {
+    width: 6px; /* Fallback for other browsers */
+}

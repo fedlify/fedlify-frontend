@@ -12,7 +12,7 @@ import routerBindings, {
 import dataProvider from "@refinedev/simple-rest";
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Route, Routes } from "react-router";
-import { ColorModeContextProvider } from "./contexts/color-mode";
+import { ConfigProvider } from "./contexts";
 import HomePage from "./pages/home";
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +20,7 @@ function App() {
   const { t, i18n } = useTranslation();
 
   const i18nProvider = {
-    translate: (key: string, params?: Record<string, unknown>) => String(t(key, params)),
+    translate: (key: string, params?: Record<string, unknown>) => t(key, params),
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
     getLocale: () => i18n.language,
   };
@@ -28,7 +28,7 @@ function App() {
   return (
     <BrowserRouter>
       <RefineKbarProvider>
-        <ColorModeContextProvider>
+        <ConfigProvider>
           <AntdApp>
             <DevtoolsProvider>
               <Refine
@@ -53,7 +53,7 @@ function App() {
               <DevtoolsPanel />
             </DevtoolsProvider>
           </AntdApp>
-        </ColorModeContextProvider>
+        </ConfigProvider>
       </RefineKbarProvider>
     </BrowserRouter>
   );
