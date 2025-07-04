@@ -151,8 +151,8 @@ const HomePage: React.FC = () => {
                             delay={2}
                         />
                         <LayoutGroup>
-                            <FadeInTitle text="Collaborate Securely." level={2} delay={3} />
                             <FadeInTitle text="Unlock Precision Medicine." level={3} delay={3} />
+                            <FadeInTitle text="Collaborate Securely." level={3} delay={3} />
                             <FadeInTitle text="Democratize AI." level={3} delay={3} />
 
                             <motion.div
@@ -172,7 +172,7 @@ const HomePage: React.FC = () => {
                             </motion.div>
                         </LayoutGroup>
                     </Space>
-                    <FadeInTitle text="Fedlify helps healthcare researchers develop and deploy AI models collaboratively — without centralizing sensitive data." level={4} delay={3.25} />
+                    <FadeInTitle text="Fedlify helps healthcare researchers develop and deploy AI models collaboratively — without centralizing sensitive data." level={2} delay={3.25} />
                 </Flex>
             </section>
 
@@ -216,7 +216,7 @@ const HomePage: React.FC = () => {
             <section
                 style={{
                     minHeight: "50vh",
-                    background: "#555572",
+                    background: "#4C5270",
                     color: "white",
                     display: "flex",
                     alignItems: "center",
