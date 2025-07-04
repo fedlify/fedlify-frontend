@@ -40,6 +40,33 @@ const features = [
     },
 ];
 
+interface FadeInTitleProps {
+    text: string;
+    level?: 1 | 2 | 3 | 4 | 5;
+    delay?: number;
+}
+
+export const FadeInTitle: React.FC<FadeInTitleProps> = ({
+    text,
+    level = 2,
+    delay = 0,
+}) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay }}
+        >
+            <Typography.Title
+                level={level}
+                style={{ color: "#555572", fontWeight: "normal" }}
+            >
+                {text}
+            </Typography.Title>
+        </motion.div>
+    );
+};
+
 // Main HomePage component for the landing page
 const HomePage: React.FC = () => {
     const { styles } = useStyles();
@@ -96,36 +123,18 @@ const HomePage: React.FC = () => {
                         delay={1.8}
                     />
                     <Space direction="vertical"
-
                         style={{ padding: 32 }}>
                         <FedlifyLogoName
                             style={{
-                                width: "25vw",
+                                width: "clamp(200px, 20vw, 350px)",
                                 height: "auto",
                                 // marginTop: "-3rem",
                             }}
                             delay={2}
                         />
                         <LayoutGroup>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 3 }}
-                            >
-                                <Typography.Text
-                                    style={{ color: '#555572' }}>
-                                    Federated Intelligence.
-                                </Typography.Text>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 3.25 }}
-                            >
-                                <Typography.Title level={3} style={{ color: '#555572' }}>
-                                    Unified Progress.
-                                </Typography.Title>
-                            </motion.div>
+                            <FadeInTitle text="Federated Intelligence." level={2} delay={3} />
+                            <FadeInTitle text="Unified Progress." level={3} delay={3.25} />
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -136,9 +145,7 @@ const HomePage: React.FC = () => {
                                 </Button>
                             </motion.div>
                         </LayoutGroup>
-
                     </Space>
-
                 </Flex>
 
 
@@ -216,53 +223,3 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
-
-
-// <motion.div
-//                     initial={{ opacity: 0, y: 30 }}
-//                     animate={{ opacity: 1, y: 0 }}
-//                     transition={{ duration: 1 }}
-//                     style={{
-//                         position: "relative",
-//                         zIndex: 1,
-//                         height: "100vh",
-//                         display: "flex",
-//                         justifyContent: "center",
-//                         alignItems: "center",
-//                         flexDirection: "column",
-//                         padding: "0 20px",
-//                     }}
-//                 >
-//                     <motion.div
-//                         initial={{ opacity: 0, y: 30 }}
-//                         animate={{ opacity: 1, y: 0 }}
-//                         transition={{ duration: 1 }}
-//                         style={{
-//                             position: "relative",
-//                             background: 'red',
-//                             zIndex: 1,
-//                             height: "100vh",
-//                             display: "flex",
-//                             justifyContent: "center",
-//                             alignItems: "center",
-//                             flexDirection: "row",
-//                             gap: "2rem",
-//                         }}
-//                     >
-//                         {/* Fedlify logo and name */}
-//                         <FedlifyLogo
-//                             style={{ width: "15vw", height: "auto" }}
-//                             delay={2}
-//                         />
-//                         <FedlifyLogoName
-//                             style={{
-//                                 width: "25vw",
-//                                 height: "auto",
-//                                 marginTop: "-3rem",
-//                             }}
-//                             delay={2.5}
-//                         />
-//                     </motion.div>
-
-
-//                 </motion.div>
