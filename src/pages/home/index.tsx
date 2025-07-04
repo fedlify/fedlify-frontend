@@ -151,9 +151,9 @@ const HomePage: React.FC = () => {
                             delay={2}
                         />
                         <LayoutGroup>
-                            <FadeInTitle text="Collaborate Securely." level={3} delay={3} />
-                            <FadeInTitle text="Democratize AI." level={3} delay={3} />
+                            <FadeInTitle text="Collaborate Securely." level={2} delay={3} />
                             <FadeInTitle text="Unlock Precision Medicine." level={3} delay={3} />
+                            <FadeInTitle text="Democratize AI." level={3} delay={3} />
 
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
