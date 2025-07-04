@@ -27,16 +27,28 @@ const { Footer } = Layout;
 // Feature list for the landing page
 const features = [
     {
-        title: "Fast",
-        description: "Lightning-fast performance for modern web apps.",
+        title: "Federated Model Training",
+        description: "Train models collaboratively without moving raw data.",
     },
     {
-        title: "Responsive",
-        description: "Works perfectly on any device size.",
+        title: "Privacy & Security First",
+        description: "Comply with international frameworks (HIPAA, GDPR, etc).",
     },
     {
-        title: "Easy to Use",
-        description: "Built with developer-friendly design in mind.",
+        title: "Interoperability",
+        description: "Supports FAIR data principles and standard data schemas.",
+    },
+    {
+        title: "Low-Code Collaboration",
+        description: "Empower clinicians and non-technical researchers to participate.",
+    },
+    {
+        title: "Model Explainability",
+        description: "Integrated tools for transparency and trust.",
+    },
+    {
+        title: "Scalable & Flexible",
+        description: "Works for small pilots and multinational studies alike.",
     },
 ];
 
@@ -112,18 +124,24 @@ const HomePage: React.FC = () => {
                     style={{
                         height: '100%',
                         width: '100%',
-                        // background: 'red'
+                        // background: 'red',
+                        paddingLeft: '10vw',
+                        paddingRight: '10vw'
                     }}
                 >
                     <FedlifyLogo
                         style={{
-                            width: "15vw",
+                            width: "45vw",
                             height: "auto"
                         }}
                         delay={1.8}
                     />
                     <Space direction="vertical"
-                        style={{ padding: 32 }}>
+                        style={{
+                            padding: 32,
+                            width: '100%',
+                            // background: 'yellow'
+                        }}>
                         <FedlifyLogoName
                             style={{
                                 width: "clamp(200px, 20vw, 350px)",
@@ -133,19 +151,28 @@ const HomePage: React.FC = () => {
                             delay={2}
                         />
                         <LayoutGroup>
-                            <FadeInTitle text="Federated Intelligence." level={3} delay={3} />
-                            <FadeInTitle text="Unified Progress." level={4} delay={3.25} />
+                            <FadeInTitle text="Collaborate Securely." level={3} delay={3} />
+                            <FadeInTitle text="Democratize AI." level={3} delay={3} />
+                            <FadeInTitle text="Unlock Precision Medicine." level={3} delay={3} />
+
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 3.5 }}
                             >
-                                <Button type="primary" size="large">
-                                    Get Started
-                                </Button>
+                                <Space>
+                                    <Button type="primary" size="large">
+                                        Get Started
+                                    </Button>
+                                    <Button size="large">
+                                        Request a demo
+                                    </Button>
+                                </Space>
+
                             </motion.div>
                         </LayoutGroup>
                     </Space>
+                    <FadeInTitle text="Fedlify helps healthcare researchers develop and deploy AI models collaboratively — without centralizing sensitive data." level={4} delay={3.25} />
                 </Flex>
             </section>
 
