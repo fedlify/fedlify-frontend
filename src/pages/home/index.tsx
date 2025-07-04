@@ -133,8 +133,8 @@ const HomePage: React.FC = () => {
                             delay={2}
                         />
                         <LayoutGroup>
-                            <FadeInTitle text="Federated Intelligence." level={2} delay={3} />
-                            <FadeInTitle text="Unified Progress." level={3} delay={3.25} />
+                            <FadeInTitle text="Federated Intelligence." level={3} delay={3} />
+                            <FadeInTitle text="Unified Progress." level={4} delay={3.25} />
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -147,8 +147,6 @@ const HomePage: React.FC = () => {
                         </LayoutGroup>
                     </Space>
                 </Flex>
-
-
             </section>
 
             {/* Features section with animated cards */}

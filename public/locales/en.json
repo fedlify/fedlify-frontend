@@ -1,4 +1,8 @@
 {
+    "documentTitle": {
+        "default": "Fedlify",
+        "suffix": " | Fedlify"
+    },
     "pages": {
         "home": {
             "title": "Fedlify – Collaborate on AI development, without compromising data privacy."

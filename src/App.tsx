@@ -42,6 +42,13 @@ function App() {
                   useNewQueryKeys: true,
                   projectId: "PysoNN-hXte4H-8HUuiy",
                 }}
+              // resources={[
+              //   {
+              //     name: "home",
+              //     list: "/",
+              //     meta: { label: "Home" },
+              //   }
+              // ]}
               >
                 <Routes>
                   <Route path="/" element={<HomePage />} />
@@ -55,7 +62,7 @@ function App() {
           </AntdApp>
         </ConfigProvider>
       </RefineKbarProvider>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 
