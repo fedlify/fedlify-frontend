@@ -8,8 +8,8 @@ import {
   theme,
   Typography,
 } from "antd";
-import React, { useContext } from "react";
-import { ColorModeContext } from "../../contexts/color-mode";
+import React from "react";
+// import { ConfigProviderContext } from "../../contexts";
 
 const { Text } = Typography;
 const { useToken } = theme;
@@ -25,7 +25,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
 }) => {
   const { token } = useToken();
   const { data: user } = useGetIdentity<IUser>();
-  const { mode, setMode } = useContext(ColorModeContext);
+  // const { mode, setMode } = useContext(ConfigProviderContext);
 
   const headerStyles: React.CSSProperties = {
     backgroundColor: token.colorBgElevated,
@@ -48,8 +48,8 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
         <Switch
           checkedChildren="🌛"
           unCheckedChildren="🔆"
-          onChange={() => setMode(mode === "light" ? "dark" : "light")}
-          defaultChecked={mode === "dark"}
+        // onChange={() => setMode(mode === "light" ? "dark" : "light")}
+        // defaultChecked={mode === "dark"}
         />
         <Space style={{ marginLeft: "8px" }} size="middle">
           {user?.name && <Text strong>{user.name}</Text>}

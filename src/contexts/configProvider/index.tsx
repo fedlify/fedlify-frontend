@@ -7,7 +7,6 @@ import {
 } from "react";
 import {
   ConfigProvider as AntdConfigProvider,
-  Slider,
   theme,
   type ThemeConfig,
 } from "antd";

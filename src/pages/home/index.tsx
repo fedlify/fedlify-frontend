@@ -17,15 +17,10 @@
  */
 import React, { useRef } from "react";
 import { Typography, Button, Card, Row, Col, Layout, Flex, Space } from "antd";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { FedlifyLogo, FedlifyLogoName } from "../../components/icons/fedlify";
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
-import { useMemo } from 'react'
-import * as THREE from 'three'
-import { shaderMaterial } from "@react-three/drei";
-import { extend } from "@react-three/fiber";
+import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
+import { FedlifyLogo, FedlifyLogoName, FedlifyNetwork } from "../../components";
 import { useStyles } from "./styled";
+
 const { Title, Paragraph } = Typography;
 const { Footer } = Layout;
 
@@ -44,110 +39,6 @@ const features = [
         description: "Built with developer-friendly design in mind.",
     },
 ];
-
-// Create a custom shader material for progressive wireframe drawing
-const WireShaderMaterial = shaderMaterial(
-    { uProgress: 0 },
-    // vertex
-    `
-    varying float vIndex;
-    attribute float aIndex;
-    void main() {
-      vIndex = aIndex;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-    // fragment
-    `
-    varying float vIndex;
-    uniform float uProgress;
-    void main() {
-      if(vIndex > uProgress) discard;
-      gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0); // black
-    }
-  `
-);
-
-// Register the custom shader material with React Three Fiber
-extend({ WireShaderMaterial });
-
-// 3D Globe Network Scene with animated wireframe and camera
-const GlobeNetworkScene: React.FC = () => {
-    const groupRef = useRef<THREE.Group>(null);
-    const materialRef = useRef<any>(null);
-    const { camera } = useThree();
-
-    // Create geometry and wireframe for the globe
-    const geometry = useMemo(() => new THREE.IcosahedronGeometry(3.5, 1), []);
-    const wire = useMemo(() => new THREE.WireframeGeometry(geometry), [geometry]);
-
-    // Assign a progressive index to each vertex for animation
-    useMemo(() => {
-        const count = wire.attributes.position.count;
-        const aIndex = new Float32Array(count);
-        for (let i = 0; i < count; i++) {
-            aIndex[i] = i / count;
-        }
-        wire.setAttribute("aIndex", new THREE.BufferAttribute(aIndex, 1));
-    }, [wire]);
-
-    // Animate the wireframe drawing and camera movement
-    useFrame((state, delta) => {
-        if (groupRef.current) {
-            groupRef.current.rotation.y += 0.002;
-        }
-        if (materialRef.current) {
-            materialRef.current.uProgress += delta * 0.6;
-            if (materialRef.current.uProgress >= 1) {
-                materialRef.current.uProgress = 1;
-
-                // Animate the camera after drawing is complete
-                const targetZ = 3;
-                camera.position.z += (targetZ - camera.position.z) * 0.05;
-                camera.lookAt(0, 0, 3);
-            }
-        }
-    });
-
-    return (
-        <>
-            {/* Ambient lighting for the scene */}
-            <ambientLight intensity={0.5} />
-            <group ref={groupRef}>
-                <lineSegments geometry={wire}>
-                    {/* Custom shader material for progressive wireframe animation */}
-                    <wireShaderMaterial
-                        ref={materialRef}
-                        transparent
-                        uProgress={0}
-                    />
-                </lineSegments>
-            </group>
-            {/* User can rotate the globe, but not zoom */}
-            {/* <OrbitControls enableZoom={false} /> */}
-        </>
-    );
-};
-
-// Canvas wrapper for the animated globe network background
-const GlobeNetwork: React.FC = () => {
-    return (
-        <Canvas
-            style={{
-                position: 'absolute',
-                opacity: 0.15,
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                background: 'white', // match the dark theme
-                zIndex: 0,
-            }}
-            camera={{ position: [0, 0, 8] }}>
-            <GlobeNetworkScene />
-        </Canvas>
-    )
-}
 
 // Main HomePage component for the landing page
 const HomePage: React.FC = () => {
@@ -184,21 +75,25 @@ const HomePage: React.FC = () => {
                         y, // same parallax
                     }}
                 >
-                    <GlobeNetwork />
+                    <FedlifyNetwork />
                 </motion.div>
 
                 {/* Foreground text and logo with entrance animation */}
                 <Flex
                     justify="center"
                     align="center"
-                    style={{ height: '100%' }}
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                        // background: 'red'
+                    }}
                 >
                     <FedlifyLogo
                         style={{
                             width: "15vw",
                             height: "auto"
                         }}
-                        delay={2}
+                        delay={1.8}
                     />
                     <Space direction="vertical"
 
@@ -207,26 +102,41 @@ const HomePage: React.FC = () => {
                             style={{
                                 width: "25vw",
                                 height: "auto",
-                                marginTop: "-3rem",
+                                // marginTop: "-3rem",
                             }}
-                            delay={2.5}
+                            delay={2}
                         />
-                        <motion.div
-                            initial={{ opacity: 0, y: 20, display: 'none' }}
-                            animate={{ opacity: 1, y: 0, display: 'block' }}
-                            transition={{ duration: 0.8, delay: 6 }}
-                        >
-                            <Typography.Title level={2}>
-                                Federated Intelligence.
-                            </Typography.Title>
-                            <Typography.Title level={3}>
-                                Unified Progress.
-                            </Typography.Title>
-                            {/* Main call-to-action button */}
-                            <Button type="primary" size="large">
-                                Get Started
-                            </Button>
-                        </motion.div>
+                        <LayoutGroup>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 3 }}
+                            >
+                                <Typography.Text
+                                    style={{ color: '#555572' }}>
+                                    Federated Intelligence.
+                                </Typography.Text>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 3.25 }}
+                            >
+                                <Typography.Title level={3} style={{ color: '#555572' }}>
+                                    Unified Progress.
+                                </Typography.Title>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 3.5 }}
+                            >
+                                <Button type="primary" size="large">
+                                    Get Started
+                                </Button>
+                            </motion.div>
+                        </LayoutGroup>
+
                     </Space>
 
                 </Flex>
