@@ -5,6 +5,7 @@ export const useStyles = createStyles(({ /*token,*/ css }) => {
     hero: css`
         position: relative;
         height: 100vh;
+        min-height: 850px;
         overflow: hidden;
   `,
   };

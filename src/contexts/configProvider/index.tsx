@@ -66,7 +66,7 @@ const getThemeModeConfig = (mode: Mode): ThemeConfig => {
       colorPrimary: "#21b6a8",
       fontFamily: "Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
       // colorBgElevated: "#f5f5f5",
-      // fontSize: 13
+      fontSize: 16,
     },
     algorithm: mode === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
     components,

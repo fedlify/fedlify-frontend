@@ -34,9 +34,9 @@ extend({ WireShaderMaterial });
 // Add types to ThreeElements elements so primitives pick up on it
 // see https://r3f.docs.pmnd.rs/api/typescript#extending-threeelements
 declare module '@react-three/fiber' {
-  interface ThreeElements {
-    wireShaderMaterial: ThreeElement<typeof WireShaderMaterial>
-  }
+    interface ThreeElements {
+        wireShaderMaterial: ThreeElement<typeof WireShaderMaterial>
+    }
 }
 
 // 3D Globe Network Scene with animated wireframe and camera

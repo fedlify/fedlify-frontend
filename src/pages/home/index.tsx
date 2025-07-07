@@ -20,6 +20,8 @@ import { Typography, Button, Card, Row, Col, Layout, Flex, Space } from "antd";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { FedlifyLogo, FedlifyLogoName, FedlifyNetwork } from "../../components";
 import { useStyles } from "./styled";
+import { Grid } from 'antd';
+const { useBreakpoint } = Grid;
 
 const { Title, Paragraph } = Typography;
 const { Footer } = Layout;
@@ -56,22 +58,28 @@ interface FadeInTitleProps {
     text: string;
     level?: 1 | 2 | 3 | 4 | 5;
     delay?: number;
+    style?: React.CSSProperties;
 }
 
 export const FadeInTitle: React.FC<FadeInTitleProps> = ({
     text,
     level = 2,
     delay = 0,
+    style = {}
 }) => {
     return (
         <motion.div
+            style={style}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay }}
         >
             <Typography.Title
                 level={level}
-                style={{ color: "#555572", fontWeight: "normal" }}
+                style={{
+                    color: "#555572",
+                    fontWeight: "lighter",
+                }}
             >
                 {text}
             </Typography.Title>
@@ -80,101 +88,145 @@ export const FadeInTitle: React.FC<FadeInTitleProps> = ({
 };
 
 // Main HomePage component for the landing page
-const HomePage: React.FC = () => {
+const HeroSection: React.FC = () => {
     const { styles } = useStyles();
-    // Ref for the hero section to connect scroll-based parallax
     const heroRef = useRef<HTMLDivElement>(null);
-
-    // Connect scroll position to a parallax shift using Framer Motion
     const { scrollYProgress } = useScroll({
         target: heroRef,
         offset: ["start start", "end start"],
     });
-
-    // Map scroll progress to vertical translation for parallax effect
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-
+    const screens = useBreakpoint();
+    /*
+        screens = {
+            xs: true | false,
+            sm: true | false,
+            md: true | false,
+            lg: true | false,
+            xl: true | false,
+            xxl: true | false
+        }
+    */
+    let logoSize = 250;
+    if (screens.xs) {
+        logoSize = 150;
+    }
     return (
-        <Layout>
-            {/* Hero section with animated parallax background and logo */}
-            <section ref={heroRef}
-                className={styles.hero}
+        <section
+            ref={heroRef}
+            className={styles.hero}
+        >
+            {/* Parallax background with animated globe network */}
+            <motion.div
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    zIndex: 0,
+                    y,
+                }}
             >
-
-                {/* Parallax background with animated globe network */}
-                <motion.div
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        zIndex: 0,
-                        // background: `url('https://zos.alipayobjects.com/rmsportal/gGlUMYGEIvjDOOw.jpg') center/cover no-repeat`,
-                        y, // same parallax
-                    }}
-                >
-                    <FedlifyNetwork />
-                </motion.div>
-
-                {/* Foreground text and logo with entrance animation */}
+                <FedlifyNetwork />
+            </motion.div>
+            {/* Foreground text and logo with entrance animation */}
+            <Flex
+                justify="center"
+                align="center"
+                wrap
+                style={{
+                    height: '100%',
+                    width: '100%',
+                }}
+            >
                 <Flex
                     justify="center"
                     align="center"
+                    wrap
+                    gap="2.6rem"
                     style={{
-                        height: '100%',
                         width: '100%',
-                        // background: 'red',
-                        paddingLeft: '10vw',
-                        paddingRight: '10vw'
+                        paddingTop: 8
                     }}
                 >
                     <FedlifyLogo
                         style={{
-                            width: "45vw",
+                            width: screens.lg ? 250 : 150,
                             height: "auto"
                         }}
                         delay={1.8}
                     />
-                    <Space direction="vertical"
-                        style={{
-                            padding: 32,
-                            width: '100%',
-                            // background: 'yellow'
-                        }}>
+                    <Flex
+                        justify="center"
+                        align={screens.md ? "start" : "center"}
+                        vertical={true}
+                        wrap
+                    >
                         <FedlifyLogoName
                             style={{
                                 width: "clamp(200px, 20vw, 350px)",
                                 height: "auto",
-                                // marginTop: "-3rem",
                             }}
                             delay={2}
                         />
-                        <LayoutGroup>
-                            <FadeInTitle text="Unlock Precision Medicine." level={3} delay={3} />
-                            <FadeInTitle text="Collaborate Securely." level={3} delay={3} />
-                            <FadeInTitle text="Democratize AI." level={3} delay={3} />
-
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 3.5 }}
-                            >
-                                <Space>
-                                    <Button type="primary" size="large">
-                                        Get Started
-                                    </Button>
-                                    <Button size="large">
-                                        Request a demo
-                                    </Button>
-                                </Space>
-
-                            </motion.div>
-                        </LayoutGroup>
-                    </Space>
-                    <FadeInTitle text="Fedlify helps healthcare researchers develop and deploy AI models collaboratively — without centralizing sensitive data." level={2} delay={3.25} />
+                        <Flex
+                            wrap
+                            justify="center"
+                            align="baseline"
+                            gap={screens.md ? "6.6rem" : "2.6rem"}
+                        >
+                            <div>
+                                <LayoutGroup>
+                                    <FadeInTitle text="Unlock Precision Medicine."
+                                        level={4}
+                                        delay={3} />
+                                    <FadeInTitle text="Collaborate Securely."
+                                        level={4}
+                                        delay={3}
+                                        style={{ marginTop: -8 }} />
+                                    <FadeInTitle text="Democratize AI."
+                                        level={4}
+                                        delay={3}
+                                        style={{ marginTop: -8 }} />
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 3.5 }}
+                                    >
+                                        <Space style={{ marginTop: 22 }}>
+                                            <Button color="default" variant="outlined">
+                                                Get Started
+                                            </Button>
+                                            <Button color="default" variant="filled">
+                                                Request a demo
+                                            </Button>
+                                        </Space>
+                                    </motion.div>
+                                </LayoutGroup>
+                            </div>
+                            <FadeInTitle
+                                style={{
+                                    maxWidth: screens.md ? "40vw" : "80vw",
+                                }}
+                                text="Fedlify helps healthcare researchers develop and deploy AI models collaboratively — without centralizing sensitive data."
+                                level={2}
+                                delay={3.25} />
+                        </Flex>
+                    </Flex>
                 </Flex>
-            </section>
+            </Flex>
+        </section>
+    );
+};
+
+const HomePage: React.FC = () => {
+    // const { styles } = useStyles();
+    // const screens = useBreakpoint();
+
+    return (
+        <Layout>
+            <HeroSection />
 
             {/* Features section with animated cards */}
             <section
@@ -243,7 +295,7 @@ const HomePage: React.FC = () => {
             <Footer style={{ textAlign: "center", background: "#f0f2f5" }}>
                 ©2025 Fedlify. All rights reserved.
             </Footer>
-        </Layout >
+        </Layout>
     );
 };
 
