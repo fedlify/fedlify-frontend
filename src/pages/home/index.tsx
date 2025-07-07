@@ -107,10 +107,7 @@ const HeroSection: React.FC = () => {
             xxl: true | false
         }
     */
-    let logoSize = 250;
-    if (screens.xs) {
-        logoSize = 150;
-    }
+    
     return (
         <section
             ref={heroRef}
