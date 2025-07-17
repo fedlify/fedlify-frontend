@@ -57,7 +57,10 @@ const getThemeModeConfig = (mode: Mode): ThemeConfig => {
       lineHeight: 1.15,
     },
     Typography: {
-      colorLink: "rgb(82,196,26)"
+      colorLink: "rgb(82,196,26)",
+      fontSize: 16,
+      // colorText: '#555572',
+      fontWeightStrong: 700
     }
   }
 
