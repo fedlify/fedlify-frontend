@@ -16,7 +16,7 @@
  * - The design is responsive and visually engaging, with a focus on modern web aesthetics.
  */
 import React, { useRef } from "react";
-import { Typography, Button, Card, Row, Col, Layout, Flex, Space, List } from "antd";
+import { Typography, Button, Card, Row, Col, Layout, Flex, Space } from "antd";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { FedlifyLogo, FedlifyLogoName, FedlifyNetwork } from "../../components";
 import { useStyles } from "./styled";
@@ -285,7 +285,7 @@ const ProblemSolutionSection: React.FC = () => {
                             >
                                 <source src="/video/problem-domain.mp4" type="video/mp4" />
                                 Your browser doesn’t support HTML5 video. You can
-                                <a href="video.mp4">download it here</a>.
+                                <a href="/video/problem-domain.mp4">download it here</a>.
                             </video>
                         </motion.div>
                     </Col>
