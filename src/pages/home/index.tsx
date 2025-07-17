@@ -275,9 +275,9 @@ const ProblemSolutionSection: React.FC = () => {
                                 style={{
                                     width: '100%',
                                     height: 'auto',
+                                    border: '1px solid lightgrey',
+                                    borderRadius: '8px'
                                 }}
-                                // width="640"
-                                // height="360"
                                 controls
                                 // poster="thumbnail.jpg"
                                 preload="metadata"
