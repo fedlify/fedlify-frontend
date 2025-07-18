@@ -246,6 +246,13 @@ const ProblemSolutionSection: React.FC = () => {
             {/* Problem Section */}
             <Card
                 variant="borderless"
+                styles={{
+                    body: {
+                        paddingTop: "3em",
+                        // background: "#F5F5F5",
+                        paddingBottom: "4em",
+                    },
+                }}
             // style={{
             //     background: "white",
             //     padding: "5em",
@@ -326,11 +333,18 @@ const ProblemSolutionSection: React.FC = () => {
             {/* Solution Section */}
             <Card
                 variant="borderless"
-                style={{
-                    // background: "white",
-                    // padding: "5em",
-                    // minHeight: "80vh",
+                styles={{
+                    body: {
+                        paddingTop: "3em",
+                        // background: "#F5F5F5",
+                        paddingBottom: "4em",
+                    },
                 }}
+                // style={{
+                //     // background: "white",
+                //     // padding: "5em",
+                //     // minHeight: "80vh",
+                // }}
             >
                 <Row gutter={[32, 32]} align="middle" justify="center">
                     <Col xs={24} md={12} order={2} >
@@ -393,8 +407,12 @@ const HomePage: React.FC = () => {
             {/* Features section with animated cards */}
             <Card
                 variant="borderless"
-                style={{
-                    background: "#F5F5F5",
+                styles={{
+                    body: {
+                        paddingTop: "3em",
+                        background: "#F5F5F5",
+                        paddingBottom: "4em",
+                    },
                 }}
             // style={{
             //     // minHeight: "100vh",
