@@ -16,7 +16,7 @@
  * - The design is responsive and visually engaging, with a focus on modern web aesthetics.
  */
 import React, { useRef } from "react";
-import { Typography, Button, Card, Row, Col, Layout, Flex, Space, Badge, Avatar, Tag } from "antd";
+import { Typography, Button, Card, Row, Col, Layout, Flex, Space, Avatar, Tag } from "antd";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { FedlifyLogo, FedlifyLogoName, FedlifyNetwork } from "../../components";
 import { useStyles } from "./styled";
@@ -418,44 +418,42 @@ const HomePage: React.FC = () => {
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.8 }}
                             >
-                                <Badge.Ribbon text={idx + 1} color="#CFAF6B">
-                                    <Card
-                                        title={
-                                            <>
-                                                <Avatar
-                                                    size="large"
-                                                    style={{
-                                                        zIndex: 10,
-                                                        backgroundColor: '#A892AB',
-                                                        // color: '#f56a00',
+                                <Card
+                                    title={
+                                        <>
+                                            <Avatar
+                                                size="large"
+                                                style={{
+                                                    zIndex: 10,
+                                                    backgroundColor: '#A892AB',
+                                                    // color: '#f56a00',
 
 
-                                                    }}
-                                                >
-                                                    {stage.title.charAt(0)}
-                                                </Avatar>
-                                                <Tag
-                                                    color="#A892AB"
-                                                    style={{
-                                                        marginLeft: -6,
-                                                        paddingLeft: "1em"
-                                                    }}>
-                                                    {stage.title}
-                                                </Tag>
-                                            </>
-                                        }>
+                                                }}
+                                            >
+                                                {idx + 1}
+                                            </Avatar>
+                                            <Tag
+                                                color="#A892AB"
+                                                style={{
+                                                    marginLeft: -6,
+                                                    paddingLeft: "1em"
+                                                }}>
+                                                {stage.title}
+                                            </Tag>
+                                        </>
+                                    }>
 
-                                        {
-                                            stage.desc.map((item) => (
-                                                <Space align="start">
-                                                    <CheckCircleOutlined color="red" />
-                                                    {item}
-                                                </Space>
-                                            ))
-                                        }
-                                    </Card>
+                                    {
+                                        stage.desc.map((item) => (
+                                            <Space align="start">
+                                                <CheckCircleOutlined color="red" />
+                                                {item}
+                                            </Space>
+                                        ))
+                                    }
+                                </Card>
 
-                                </Badge.Ribbon>
                             </motion.div>
                         </Col>
 
