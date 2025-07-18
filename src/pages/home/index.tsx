@@ -355,8 +355,8 @@ const ProblemSolutionSection: React.FC = () => {
                             >
                                 Fedlify Simplifies Collaborative, Privacy-Preserving Health AI
                             </Title>
-                            <Paragraph style={{ fontSize: "1.2rem" }}>
-                                Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. Our platform enables institutions to contribute to AI innovation without transferring sensitive data. With a no-code interface, every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can confidently engage in the process. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
+                            <Paragraph>
+                                Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. By using our no-code platform, institutions can contribute to AI development without transferring sensitive data. Every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can participate confidently. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
                             </Paragraph>
                         </motion.div>
                     </Col>
@@ -412,7 +412,7 @@ const HomePage: React.FC = () => {
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.8 }}
                             >
-                                <Badge.Ribbon text={idx + 1}>
+                                <Badge.Ribbon text={idx + 1} color="#CFAF6B">
                                     <Card
                                         title={
                                             <>
@@ -420,7 +420,7 @@ const HomePage: React.FC = () => {
                                                     size="large"
                                                     style={{
                                                         zIndex: 10,
-                                                        backgroundColor: 'grey',
+                                                        backgroundColor: '#A892AB',
                                                         // color: '#f56a00',
 
 
@@ -429,9 +429,9 @@ const HomePage: React.FC = () => {
                                                     {stage.title.charAt(0)}
                                                 </Avatar>
                                                 <Tag
-                                                    color="grey"
+                                                    color="#A892AB"
                                                     style={{
-                                                        marginLeft: -8,
+                                                        marginLeft: -6,
                                                         paddingLeft: "1em"
                                                     }}>
                                                     {stage.title}
@@ -441,8 +441,8 @@ const HomePage: React.FC = () => {
 
                                         {
                                             stage.desc.map((item) => (
-                                                <Space>
-                                                    <CheckCircleOutlined />
+                                                <Space align="start">
+                                                    <CheckCircleOutlined color="red" />
                                                     {item}
                                                 </Space>
                                             ))
