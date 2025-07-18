@@ -452,7 +452,7 @@ const HomePage: React.FC = () => {
                                                 {idx + 1}
                                             </Avatar>
                                             <Tag
-                                                color="#A892AB"
+                                                color="#806484ff"
                                                 style={{
                                                     marginLeft: -6,
                                                     paddingLeft: "1em"
