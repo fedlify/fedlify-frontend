@@ -340,11 +340,11 @@ const ProblemSolutionSection: React.FC = () => {
                         paddingBottom: "4em",
                     },
                 }}
-                // style={{
-                //     // background: "white",
-                //     // padding: "5em",
-                //     // minHeight: "80vh",
-                // }}
+            // style={{
+            //     // background: "white",
+            //     // padding: "5em",
+            //     // minHeight: "80vh",
+            // }}
             >
                 <Row gutter={[32, 32]} align="middle" justify="center">
                     <Col xs={24} md={12} order={2} >
@@ -452,7 +452,7 @@ const HomePage: React.FC = () => {
                                                 {idx + 1}
                                             </Avatar>
                                             <Tag
-                                                color="#806484ff"
+                                                color="#806484"
                                                 style={{
                                                     marginLeft: -6,
                                                     paddingLeft: "1em"
@@ -484,7 +484,7 @@ const HomePage: React.FC = () => {
             <Card
                 style={{
                     minHeight: "50vh",
-                    background: "#555572",
+                    background: "#555573",
                     color: "white",
                     display: "flex",
                     alignItems: "center",
@@ -500,7 +500,11 @@ const HomePage: React.FC = () => {
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 1 }}
                 >
-                    <Title style={{ color: "white" }}>Ready to get started?</Title>
+                    <Title style={{
+                        color: "white",
+                        fontWeight: 'normal',
+                    }}>
+                        Ready to get started?</Title>
                     <Button type="default" size="large">
                         Contact Us
                     </Button>
