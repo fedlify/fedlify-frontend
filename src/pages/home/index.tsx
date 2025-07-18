@@ -100,7 +100,7 @@ export const FadeInTitle: React.FC<FadeInTitleProps> = ({
             <Typography.Title
                 level={level}
                 style={{
-                    color: "#555572",
+                    // color: "#555572",
                     fontWeight: "lighter",
                 }}
             >
@@ -260,15 +260,15 @@ const ProblemSolutionSection: React.FC = () => {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <Title level={2}
+                            {/* <Title level={2}
                                 style={{
                                     marginBottom: 8,
                                     fontWeight: 'normal',
                                 }}
                             >
-                                Problem Domain</Title>
-                            <Title level={4}
-                                type="secondary"
+                                Problem Domain</Title> */}
+                            <Title level={2}
+                                // type="secondary"
                                 style={{
                                     marginTop: 0,
                                     fontWeight: 'normal',
@@ -340,16 +340,16 @@ const ProblemSolutionSection: React.FC = () => {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <Title level={2}
+                            {/* <Title level={2}
                                 style={{
                                     marginBottom: 8,
                                     fontWeight: 'normal',
                                 }}
                             >
                                 Solution Domain
-                            </Title>
-                            <Title level={4}
-                                type="secondary"
+                            </Title> */}
+                            <Title level={2}
+                                // type="secondary"
                                 style={{
                                     marginTop: 0,
                                     fontWeight: 'normal',
@@ -466,7 +466,7 @@ const HomePage: React.FC = () => {
             <Card
                 style={{
                     minHeight: "50vh",
-                    background: "#4C5270",
+                    background: "#555572",
                     color: "white",
                     display: "flex",
                     alignItems: "center",
