@@ -393,6 +393,9 @@ const HomePage: React.FC = () => {
             {/* Features section with animated cards */}
             <Card
                 variant="borderless"
+                style={{
+                    background: "#F5F5F5",
+                }}
             // style={{
             //     // minHeight: "100vh",
             //     // background: "white",
