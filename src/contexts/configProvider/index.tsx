@@ -58,19 +58,18 @@ const getThemeModeConfig = (mode: Mode): ThemeConfig => {
     },
     Typography: {
       colorLink: "rgb(82,196,26)",
-      fontSize: 16,
+      // fontSize: 18,
       // colorText: '#555572',
-      fontWeightStrong: 700,
+      // fontWeightStrong: 700,
     }
   }
 
   return {
     token: {
       colorPrimary: "#634168ff",
-      fontFamily: "'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
       // colorBgElevated: "#f5f5f5",
       fontSize: 16,
-
     },
     algorithm: mode === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
     components,

@@ -454,10 +454,20 @@ const HomePage: React.FC = () => {
                                             <Tag
                                                 color="#806484"
                                                 style={{
-                                                    marginLeft: -6,
-                                                    paddingLeft: "1em"
+                                                    marginTop: 20,
+                                                    marginLeft: -8,
+                                                    paddingLeft: "1.5em",
+                                                    paddingRight: "1em",
                                                 }}>
-                                                {stage.title}
+                                                <Text
+                                                    style={{
+                                                        color: "white",
+                                                        // fontSize: 17,
+                                                        fontWeight: 'normal',
+                                                    }}
+                                                >
+                                                    {stage.title}
+                                                </Text>
                                             </Tag>
                                         </>
                                     }>
