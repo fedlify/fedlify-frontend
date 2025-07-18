@@ -265,7 +265,7 @@ const ProblemSolutionSection: React.FC = () => {
                                     fontWeight: 'normal',
                                 }}
                             >
-                                Problem Statement</Title>
+                                Problem Domain</Title>
                             <Title level={4}
                                 type="secondary"
                                 style={{
@@ -344,7 +344,7 @@ const ProblemSolutionSection: React.FC = () => {
                                     fontWeight: 'normal',
                                 }}
                             >
-                                The Solution: Privacy-Preserving Health AI Collaboration
+                                Solution Domain
                             </Title>
                             <Title level={4}
                                 type="secondary"
@@ -353,7 +353,7 @@ const ProblemSolutionSection: React.FC = () => {
                                     fontWeight: 'normal',
                                 }}
                             >
-                                Empowering Every Role to Contribute to AI—Securely and Seamlessly
+                                Fedlify Simplifies Collaborative, Privacy-Preserving Health AI
                             </Title>
                             <Paragraph style={{ fontSize: "1.2rem" }}>
                                 Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. Our platform enables institutions to contribute to AI innovation without transferring sensitive data. With a no-code interface, every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can confidently engage in the process. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
