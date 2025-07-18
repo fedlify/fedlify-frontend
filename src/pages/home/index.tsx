@@ -16,41 +16,64 @@
  * - The design is responsive and visually engaging, with a focus on modern web aesthetics.
  */
 import React, { useRef } from "react";
-import { Typography, Button, Card, Row, Col, Layout, Flex, Space } from "antd";
+import { Typography, Button, Card, Row, Col, Layout, Flex, Space, Badge, Avatar, Tag } from "antd";
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { FedlifyLogo, FedlifyLogoName, FedlifyNetwork } from "../../components";
 import { useStyles } from "./styled";
 import { Grid } from 'antd';
+import {
+    CheckCircleOutlined,
+} from '@ant-design/icons';
+
 const { useBreakpoint } = Grid;
 
 const { Title, Paragraph, Text } = Typography;
 const { Footer } = Layout;
 
-// Feature list for the landing page
-const features = [
+const WorkFlow = [
     {
-        title: "Federated Model Training",
-        description: "Train models collaboratively without moving raw data.",
+        title: "Start a Project & Invite Sites",
+        desc: [
+            "Initiate a collaboration project",
+            "Invite data custodians and research partners",
+        ]
     },
     {
-        title: "Privacy & Security First",
-        description: "Comply with international frameworks (HIPAA, GDPR, etc).",
+        title: "Manage Agreements & Permissions",
+        desc: [
+            "Secure institutional approvals and privacy agreements",
+            "Assign roles and define data use boundaries",
+        ]
     },
     {
-        title: "Interoperability",
-        description: "Supports FAIR data principles and standard data schemas.",
+        title: "Design Your AI Workflow",
+        desc: [
+            "Use a drag-and-drop interface to build custom AI pipelines",
+            "Choose data modalities, model types, and evaluation metrics",
+        ]
     },
     {
-        title: "Low-Code Collaboration",
-        description: "Empower clinicians and non-technical researchers to participate.",
+        title: "Each Site Installs the App",
+        desc:
+            [
+                "Collaborators install Fedlify locally",
+                "Connect local data sources without moving data",
+            ]
     },
     {
-        title: "Model Explainability",
-        description: "Integrated tools for transparency and trust.",
+        title: "Federated Training Begins",
+        desc:
+            [
+                "Models are trained across sites without sharing data",
+                "Updates are orchestrated securely and privately",
+            ]
     },
     {
-        title: "Scalable & Flexible",
-        description: "Works for small pilots and multinational studies alike.",
+        title: "Unified Insights & Results",
+        desc: [
+            "Aggregated results are automatically collected",
+            "Dashboards visualize cross-site performance",
+        ]
     },
 ];
 
@@ -224,8 +247,8 @@ const ProblemSolutionSection: React.FC = () => {
             <section
                 style={{
                     background: "white",
-                    padding: "60px 20px",
-                    minHeight: "80vh",
+                    padding: "5em",
+                    // minHeight: "80vh",
                 }}
             >
                 <Row gutter={[32, 32]} align="middle" justify="center">
@@ -237,14 +260,21 @@ const ProblemSolutionSection: React.FC = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <Title level={2}
-                                style={{ marginBottom: 8 }}
+                                style={{
+                                    marginBottom: 8,
+                                    fontWeight: 'normal',
+                                }}
                             >
                                 Problem Statement</Title>
                             <Title level={4}
                                 type="secondary"
-                                style={{ marginTop: 0 }}
+                                style={{
+                                    marginTop: 0,
+                                    fontWeight: 'normal',
+                                }}
                             >
-                                Fragmented Data, Fragmented AI</Title>
+                                Fragmented Data, Fragmented AI
+                            </Title>
                             <Paragraph>
                                 Healthcare data is <Text strong>sensitive</Text>,
                                 <Text strong> siloed</Text>, and <Text strong>regulated</Text>.
@@ -295,9 +325,9 @@ const ProblemSolutionSection: React.FC = () => {
             {/* Solution Section */}
             <section
                 style={{
-                    background: "#ffffff",
-                    padding: "60px 20px",
-                    minHeight: "80vh",
+                    background: "white",
+                    padding: "5em",
+                    // minHeight: "80vh",
                 }}
             >
                 <Row gutter={[32, 32]} align="middle" justify="center">
@@ -308,16 +338,25 @@ const ProblemSolutionSection: React.FC = () => {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <Title level={2}>
-                                Privacy-Preserving Collaboration, Finally Made Simple
+                            <Title level={2}
+                                style={{
+                                    marginBottom: 8,
+                                    fontWeight: 'normal',
+                                }}
+                            >
+                                The Solution: Privacy-Preserving Health AI Collaboration
+                            </Title>
+                            <Title level={4}
+                                type="secondary"
+                                style={{
+                                    marginTop: 0,
+                                    fontWeight: 'normal',
+                                }}
+                            >
+                                Empowering Every Role to Contribute to AI—Securely and Seamlessly
                             </Title>
                             <Paragraph style={{ fontSize: "1.2rem" }}>
-                                Fedlify harnesses the power of federated learning so AI models
-                                can learn from diverse, multi-institutional data — without that
-                                data ever leaving its original site. Our no-code platform
-                                enables researchers, clinicians, and data custodians to securely
-                                collaborate, improving equity and scalability in precision
-                                medicine.
+                                Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. Our platform enables institutions to contribute to AI innovation without transferring sensitive data. With a no-code interface, every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can confidently engage in the process. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
                             </Paragraph>
                         </motion.div>
                     </Col>
@@ -328,20 +367,11 @@ const ProblemSolutionSection: React.FC = () => {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <Card
-                                style={{
-                                    textAlign: "center",
-                                    minHeight: "300px",
-                                    background: "#f0f2f5",
-                                }}
-                            >
-                                {/* Replace this with your animated flow illustration */}
-                                <img
-                                    src="/placeholder-data-local-models-travel.gif"
-                                    alt="data stays local, models travel"
-                                    style={{ width: "100%", height: "auto" }}
-                                />
-                            </Card>
+                            <img
+                                src="/images/who-fedlify.png"
+                                alt="Who is Fedlify For?"
+                                style={{ width: "100%", height: "auto" }}
+                            />
                         </motion.div>
                     </Col>
                 </Row>
@@ -361,16 +391,20 @@ const HomePage: React.FC = () => {
             {/* Features section with animated cards */}
             <section
                 style={{
-                    minHeight: "100vh",
-                    background: "white",
-                    padding: "60px 20px",
+                    // minHeight: "100vh",
+                    // background: "white",
+                    padding: "5em",
                 }}
             >
-                <Title level={2} style={{ textAlign: "center" }}>
-                    Features
+                <Title level={2} style={{
+                    textAlign: "center",
+                    fontWeight: 'normal',
+                }}>
+                    How Fedlify Works
                 </Title>
                 <Row gutter={[24, 24]} justify="center">
-                    {features.map((feature, idx) => (
+                    {WorkFlow.map((stage, idx) => (
+
                         <Col key={idx} xs={24} sm={12} md={8}>
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
@@ -378,18 +412,48 @@ const HomePage: React.FC = () => {
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.8 }}
                             >
-                                <Card
-                                    hoverable
-                                    style={{
-                                        textAlign: "center",
-                                        minHeight: "220px",
-                                    }}
-                                >
-                                    <Title level={3}>{feature.title}</Title>
-                                    <Paragraph>{feature.description}</Paragraph>
-                                </Card>
+                                <Badge.Ribbon text={idx + 1}>
+                                    <Card
+                                        title={
+                                            <>
+                                                <Avatar
+                                                    size="large"
+                                                    style={{
+                                                        zIndex: 10,
+                                                        backgroundColor: 'grey',
+                                                        // color: '#f56a00',
+
+
+                                                    }}
+                                                >
+                                                    {stage.title.charAt(0)}
+                                                </Avatar>
+                                                <Tag
+                                                    color="grey"
+                                                    style={{
+                                                        marginLeft: -8,
+                                                        paddingLeft: "1em"
+                                                    }}>
+                                                    {stage.title}
+                                                </Tag>
+                                            </>
+                                        }>
+
+                                        {
+                                            stage.desc.map((item) => (
+                                                <Space>
+                                                    <CheckCircleOutlined />
+                                                    {item}
+                                                </Space>
+                                            ))
+                                        }
+                                    </Card>
+
+                                </Badge.Ribbon>
                             </motion.div>
                         </Col>
+
+
                     ))}
                 </Row>
             </section>
@@ -425,7 +489,7 @@ const HomePage: React.FC = () => {
             <Footer style={{ textAlign: "center", background: "#f0f2f5" }}>
                 ©2025 Fedlify. All rights reserved.
             </Footer>
-        </Layout>
+        </Layout >
     );
 };
 
