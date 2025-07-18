@@ -244,12 +244,13 @@ const ProblemSolutionSection: React.FC = () => {
     return (
         <>
             {/* Problem Section */}
-            <section
-                style={{
-                    background: "white",
-                    padding: "5em",
-                    // minHeight: "80vh",
-                }}
+            <Card
+                variant="borderless"
+            // style={{
+            //     background: "white",
+            //     padding: "5em",
+            //     // minHeight: "80vh",
+            // }}
             >
                 <Row gutter={[32, 32]} align="middle" justify="center">
                     <Col xs={24} md={12}>
@@ -320,13 +321,14 @@ const ProblemSolutionSection: React.FC = () => {
                         </motion.div>
                     </Col>
                 </Row>
-            </section>
+            </Card>
 
             {/* Solution Section */}
-            <section
+            <Card
+                variant="borderless"
                 style={{
-                    background: "white",
-                    padding: "5em",
+                    // background: "white",
+                    // padding: "5em",
                     // minHeight: "80vh",
                 }}
             >
@@ -375,7 +377,7 @@ const ProblemSolutionSection: React.FC = () => {
                         </motion.div>
                     </Col>
                 </Row>
-            </section>
+            </Card>
         </>
     );
 };
@@ -389,12 +391,13 @@ const HomePage: React.FC = () => {
             <HeroSection />
             <ProblemSolutionSection />
             {/* Features section with animated cards */}
-            <section
-                style={{
-                    // minHeight: "100vh",
-                    // background: "white",
-                    padding: "5em",
-                }}
+            <Card
+                variant="borderless"
+            // style={{
+            //     // minHeight: "100vh",
+            //     // background: "white",
+            //     padding: "5em",
+            // }}
             >
                 <Title level={2} style={{
                     textAlign: "center",
@@ -456,10 +459,10 @@ const HomePage: React.FC = () => {
 
                     ))}
                 </Row>
-            </section>
+            </Card>
 
             {/* Call to Action section */}
-            <section
+            <Card
                 style={{
                     minHeight: "50vh",
                     background: "#4C5270",
@@ -483,7 +486,7 @@ const HomePage: React.FC = () => {
                         Contact Us
                     </Button>
                 </motion.div>
-            </section>
+            </Card>
 
             {/* Footer with copyright */}
             <Footer style={{ textAlign: "center", background: "#f0f2f5" }}>
