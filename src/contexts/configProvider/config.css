@@ -1,4 +1,8 @@
-.ant-table-wrapper .ant-table {
+/* body {
+  font-weight: 300;
+} */
+
+/* .ant-table-wrapper .ant-table {
     border-radius: 8px;
 }
 
@@ -25,22 +29,22 @@
     margin-right: auto !important;
     font-size: 14px !important;
     margin-inline-end: auto !important;
-}
+} */
 
-.ant-col {
+/* .ant-col {
     height: 100%;
-}
+} */
 
-html[data-theme="dark"] {
+/* html[data-theme="dark"] {
     .ant-table-filter-dropdown {
         background-color: #000;
     }
-}
+} */
 
-/* This will hide all Tooltip arrows */
+/* This will hide all Tooltip arrows
 .ant-tooltip-arrow {
     display: none !important;
-}
+} */
 
 [data-theme=dark] {
     color: #fff; /* Fallback for older Safari */
@@ -50,6 +54,8 @@ html[data-theme="dark"] {
 
 * {
     scrollbar-width: thin; /* For Firefox */
+    -webkit-font-smoothing: antialiased;
+    font-weight: 300;
 }
   
 *::-webkit-scrollbar {

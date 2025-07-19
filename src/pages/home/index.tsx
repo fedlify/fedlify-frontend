@@ -101,7 +101,7 @@ export const FadeInTitle: React.FC<FadeInTitleProps> = ({
                 level={level}
                 style={{
                     // color: "#555572",
-                    fontWeight: "lighter",
+                    fontWeight: 300,
                 }}
             >
                 {text}
@@ -199,14 +199,14 @@ const HeroSection: React.FC = () => {
                             <div>
                                 <LayoutGroup>
                                     <FadeInTitle text="Unlock Precision Medicine."
-                                        level={4}
+                                        level={5}
                                         delay={3} />
                                     <FadeInTitle text="Collaborate Securely."
-                                        level={4}
+                                        level={5}
                                         delay={3}
                                         style={{ marginTop: -8 }} />
                                     <FadeInTitle text="Democratize Health AI."
-                                        level={4}
+                                        level={5}
                                         delay={3}
                                         style={{ marginTop: -8 }} />
                                     <motion.div
@@ -230,7 +230,7 @@ const HeroSection: React.FC = () => {
                                     maxWidth: screens.md ? "40vw" : "80vw",
                                 }}
                                 text="Fedlify helps healthcare researchers develop and deploy AI models collaboratively — without sharing sensitive health data."
-                                level={2}
+                                level={3}
                                 delay={3.25} />
                         </Flex>
                     </Flex>
@@ -248,9 +248,10 @@ const ProblemSolutionSection: React.FC = () => {
                 variant="borderless"
                 styles={{
                     body: {
-                        paddingTop: "3em",
+                        // paddingTop: "3em",
+                        // height: '100vh',
                         // background: "#F5F5F5",
-                        paddingBottom: "4em",
+                        // paddingBottom: "4em",
                     },
                 }}
             // style={{
@@ -259,7 +260,14 @@ const ProblemSolutionSection: React.FC = () => {
             //     // minHeight: "80vh",
             // }}
             >
-                <Row gutter={[32, 32]} align="middle" justify="center">
+                <Row gutter={[32, 32]}
+                    // align="middle"
+                    // justify="center"
+                    style={{
+                        // background: 'red',
+                        height: '100vh'
+                    }}
+                >
                     <Col xs={24} md={12}>
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
@@ -277,8 +285,8 @@ const ProblemSolutionSection: React.FC = () => {
                             <Title level={2}
                                 // type="secondary"
                                 style={{
-                                    marginTop: 0,
-                                    fontWeight: 'normal',
+                                    // marginTop: 0,
+                                    fontWeight: 'lighter',
                                 }}
                             >
                                 Fragmented Data, Fragmented AI
@@ -335,9 +343,10 @@ const ProblemSolutionSection: React.FC = () => {
                 variant="borderless"
                 styles={{
                     body: {
-                        paddingTop: "3em",
+                        height: '100vh',
+                        // paddingTop: "3em",
                         // background: "#F5F5F5",
-                        paddingBottom: "4em",
+                        // paddingBottom: "4em",
                     },
                 }}
             // style={{
@@ -365,8 +374,8 @@ const ProblemSolutionSection: React.FC = () => {
                             <Title level={2}
                                 // type="secondary"
                                 style={{
-                                    marginTop: 0,
-                                    fontWeight: 'normal',
+                                    // marginTop: 0,
+                                    fontWeight: 'lighter',
                                 }}
                             >
                                 Fedlify Simplifies Collaborative, Privacy-Preserving Health AI
@@ -401,7 +410,11 @@ const HomePage: React.FC = () => {
     // const screens = useBreakpoint();
 
     return (
-        <Layout>
+        <Layout
+            style={{
+                // fontWeight: 'lighter',
+            }}
+        >
             <HeroSection />
             <ProblemSolutionSection />
             {/* Features section with animated cards */}
@@ -409,9 +422,10 @@ const HomePage: React.FC = () => {
                 variant="borderless"
                 styles={{
                     body: {
-                        paddingTop: "3em",
+                        // paddingTop: "3em",
                         background: "#F5F5F5",
-                        paddingBottom: "4em",
+                        // paddingBottom: "4em",
+                        height: '100vh',
                     },
                 }}
             // style={{
@@ -422,7 +436,7 @@ const HomePage: React.FC = () => {
             >
                 <Title level={2} style={{
                     textAlign: "center",
-                    fontWeight: 'normal',
+                    fontWeight: 'lighter',
                 }}>
                     How Fedlify Works
                 </Title>
@@ -440,13 +454,11 @@ const HomePage: React.FC = () => {
                                     title={
                                         <>
                                             <Avatar
-                                                size="large"
+                                                size={48}
                                                 style={{
                                                     zIndex: 10,
                                                     backgroundColor: '#A892AB',
                                                     // color: '#f56a00',
-
-
                                                 }}
                                             >
                                                 {idx + 1}
@@ -454,7 +466,6 @@ const HomePage: React.FC = () => {
                                             <Tag
                                                 color="#806484"
                                                 style={{
-                                                    marginTop: 20,
                                                     marginLeft: -8,
                                                     paddingLeft: "1.5em",
                                                     paddingRight: "1em",
@@ -463,7 +474,7 @@ const HomePage: React.FC = () => {
                                                     style={{
                                                         color: "white",
                                                         // fontSize: 17,
-                                                        fontWeight: 'normal',
+                                                        // fontWeight: 'lighter',
                                                     }}
                                                 >
                                                     {stage.title}
@@ -512,7 +523,7 @@ const HomePage: React.FC = () => {
                 >
                     <Title style={{
                         color: "white",
-                        fontWeight: 'normal',
+                        fontWeight: 'lighter',
                     }}>
                         Ready to get started?</Title>
                     <Button type="default" size="large">
@@ -522,7 +533,7 @@ const HomePage: React.FC = () => {
             </Card>
 
             {/* Footer with copyright */}
-            <Footer style={{ textAlign: "center", background: "#f0f2f5" }}>
+            <Footer style={{ textAlign: "center", background: "#f0f2f5", fontWeight: 'lighter', }}>
                 ©2025 Fedlify. All rights reserved.
             </Footer>
         </Layout >
