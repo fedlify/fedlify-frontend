@@ -24,7 +24,8 @@ import { Grid } from 'antd';
 import {
     CheckCircleOutlined,
     LinkedinOutlined,
-    TwitterOutlined
+    GithubOutlined,
+    DiscordOutlined
 } from '@ant-design/icons';
 
 const { useBreakpoint } = Grid;
@@ -538,11 +539,20 @@ const HomePage: React.FC = () => {
                         </Link>
                     </Space.Compact>
                     <Space direction="vertical">
-                        <Flex gap="large" align="center" justify="end">
-                            <LinkedinOutlined style={{ fontSize: 28, color: 'grey' }} />
-                            <TwitterOutlined style={{ fontSize: 28, color: 'grey' }} />
+                        <Flex gap="large" align="center" justify="center">
+                            <FedlifyLogo width={42} />
+                        </Flex>
+                        <Flex style={{ marginTop: 12 }} gap="large" align="center" justify="center">
+                            <LinkedinOutlined style={{ fontSize: 22, color: 'grey' }} />
+                            <svg viewBox="0 0 24 24" aria-hidden="true"
+                                style={{ width: 22, height: 22 }}  >
+                                <path fill="grey" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                            <GithubOutlined style={{ fontSize: 22, color: 'grey' }} />
+                            <DiscordOutlined style={{ fontSize: 22, color: 'grey' }} />
                         </Flex>
                         <Text style={{ fontSize: "lighter", color: 'grey' }}> ©2025 Fedlify. All rights reserved. </Text>
+
                     </Space>
                 </Flex>
             </Footer>
