@@ -23,11 +23,13 @@ import { useStyles } from "./styled";
 import { Grid } from 'antd';
 import {
     CheckCircleOutlined,
+    LinkedinOutlined,
+    TwitterOutlined
 } from '@ant-design/icons';
 
 const { useBreakpoint } = Grid;
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph, Text, Link } = Typography;
 const { Footer } = Layout;
 
 const WorkFlow = [
@@ -156,7 +158,7 @@ const HeroSection: React.FC = () => {
                 align="center"
                 wrap
                 style={{
-                    height: '100%',
+                    height: '100vh',
                     width: '100%',
                 }}
             >
@@ -240,249 +242,200 @@ const HeroSection: React.FC = () => {
     );
 };
 
+interface TwoColRowProps {
+    left: React.ReactNode;
+    right: React.ReactNode;
+    background?: string;
+}
+
+const TwoColRow: React.FC<TwoColRowProps> = ({ left, right, background = 'white' }) => {
+    return (
+        <Card
+            variant="borderless"
+            styles={{
+                body: {
+                    background: background,
+                },
+            }}
+        >
+            <Row
+                gutter={[32, 32]}
+                style={{
+                    width: '100%',
+                    minHeight: '80vh',
+                    alignContent: 'center',
+                }}
+            >
+                <Col xs={24} md={12}>
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        {left}
+                    </motion.div>
+                </Col>
+                <Col xs={24} md={12}>
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        {right}
+                    </motion.div>
+                </Col>
+            </Row>
+        </Card>
+    )
+};
+
 const ProblemSolutionSection: React.FC = () => {
     return (
         <>
-            {/* Problem Section */}
-            <Card
-                variant="borderless"
-                styles={{
-                    body: {
-                        // paddingTop: "3em",
-                        // height: '100vh',
-                        // background: "#F5F5F5",
-                        // paddingBottom: "4em",
-                    },
-                }}
-            // style={{
-            //     background: "white",
-            //     padding: "5em",
-            //     // minHeight: "80vh",
-            // }}
-            >
-                <Row gutter={[32, 32]}
-                    // align="middle"
-                    // justify="center"
-                    style={{
-                        // background: 'red',
-                        height: '100vh'
-                    }}
-                >
-                    <Col xs={24} md={12}>
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            {/* <Title level={2}
-                                style={{
-                                    marginBottom: 8,
-                                    fontWeight: 'normal',
-                                }}
-                            >
-                                Problem Domain</Title> */}
-                            <Title level={2}
-                                // type="secondary"
-                                style={{
-                                    // marginTop: 0,
-                                    fontWeight: 'lighter',
-                                }}
-                            >
-                                Fragmented Data, Fragmented AI
-                            </Title>
-                            <Paragraph>
-                                Healthcare data is <Text strong>sensitive</Text>,
-                                <Text strong> siloed</Text>, and <Text strong>regulated</Text>.
-                                As a result, data remains locked within institutional boundaries, with very limited sharing or collaboration. This fragmentation restricts access to diverse, high-quality datasets—an essential ingredient for building robust AI models.
-                            </Paragraph>
-                            <Paragraph>
-                                Consequently, <Text strong>AI development in healthcare is also fragmented</Text>, often limited to single-center models that lack generalizability, scalability, and inclusivity. Sparse multi-institutional collaboration undermines the full potential of AI to transform healthcare at scale.
-                            </Paragraph>
-                            <Paragraph>
-                                <Text strong>Privacy-preserving methods</Text> offer a promising alternative: they allow institutions to collaborate without transferring sensitive data, enabling access to insights and patterns across partners. However, these approaches remain largely underutilized.
-                            </Paragraph>
-                            <Paragraph>
-                                For instance, a recent analysis found that out of more than <Text strong>3,000</Text> patient-level AI studies conducted in Canada, fewer than <Text strong>0.1%</Text> employed decentralized, privacy-preserving techniques.
-                            </Paragraph>
-                            <Paragraph>
-                                Technical complexity, lack of accessible tools, and organizational and regulatory hurdles continue to limit broader adoption—leaving both data and AI development fragmented.
-                            </Paragraph>
-                        </motion.div>
-                    </Col>
-                    <Col xs={24} md={12}>
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <video
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    border: '1px solid lightgrey',
-                                    borderRadius: '8px'
-                                }}
-                                controls
-                                // poster="thumbnail.jpg"
-                                preload="metadata"
-                                aria-label="Problem domain"
-                            >
-                                <source src="/video/problem-domain.mp4" type="video/mp4" />
-                                Your browser doesn’t support HTML5 video. You can
-                                <a href="/video/problem-domain.mp4">download it here</a>.
-                            </video>
-                        </motion.div>
-                    </Col>
-                </Row>
-            </Card>
+            <TwoColRow
+                left={<>
+                    <Title level={2}
+                        style={{
+                            fontWeight: 'lighter',
+                        }}
+                    >
+                        Fragmented Data, Fragmented AI
+                    </Title>
+                    <Paragraph>
+                        Healthcare data is sensitive, siloed, and regulated.
+                        As a result, data remains locked within institutional boundaries, with very limited sharing or collaboration. This fragmentation restricts access to diverse, high-quality datasets—an essential ingredient for building robust AI models.
+                    </Paragraph>
+                    <Paragraph>
+                        Consequently, AI development in healthcare is also fragmented, often limited to single-center models that lack generalizability, scalability, and inclusivity. Sparse multi-institutional collaboration undermines the full potential of AI to transform healthcare at scale.
+                    </Paragraph>
+                    <Paragraph>
+                        Privacy-preserving methods offer a promising alternative: they allow institutions to collaborate without transferring sensitive data, enabling access to insights and patterns across partners. However, these approaches remain largely underutilized.
+                    </Paragraph>
+                    <Paragraph>
+                        For instance, a recent analysis found that out of more than 3,000 patient-level AI studies conducted in Canada, fewer than 0.1% employed decentralized, privacy-preserving techniques.
+                    </Paragraph>
+                    <Paragraph>
+                        Technical complexity, lack of accessible tools, and organizational and regulatory hurdles continue to limit broader adoption—leaving both data and AI development fragmented.
+                    </Paragraph>
+                </>
+                }
+                right={
+                    <video
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            border: '1px solid lightgrey',
+                            borderRadius: '8px'
+                        }}
+                        controls
+                        // poster="thumbnail.jpg"
+                        preload="metadata"
+                        aria-label="Problem domain"
+                    >
+                        <source src="/video/problem-domain.mp4" type="video/mp4" />
+                        Your browser doesn’t support HTML5 video. You can
+                        <a href="/video/problem-domain.mp4">download it here</a>.
+                    </video>
+                }
+            />
 
-            {/* Solution Section */}
-            <Card
-                variant="borderless"
-                styles={{
-                    body: {
-                        height: '100vh',
-                        // paddingTop: "3em",
-                        // background: "#F5F5F5",
-                        // paddingBottom: "4em",
-                    },
-                }}
-            // style={{
-            //     // background: "white",
-            //     // padding: "5em",
-            //     // minHeight: "80vh",
-            // }}
-            >
-                <Row gutter={[32, 32]} align="middle" justify="center">
-                    <Col xs={24} md={12} order={2} >
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.8 }}
+            <TwoColRow
+                background="linear-gradient(to bottom right, white, #f8f7f462)"
+                left={
+                    <img
+                        src="/images/who-fedlify.png"
+                        alt="Who is Fedlify For?"
+                        style={{ width: "100%", height: "auto" }}
+                    />
+                }
+                right={
+                    <>
+                        <Title level={2}
+                            // type="secondary"
+                            style={{
+                                // marginTop: 0,
+                                fontWeight: 'lighter',
+                            }}
                         >
-                            {/* <Title level={2}
-                                style={{
-                                    marginBottom: 8,
-                                    fontWeight: 'normal',
-                                }}
-                            >
-                                Solution Domain
-                            </Title> */}
-                            <Title level={2}
-                                // type="secondary"
-                                style={{
-                                    // marginTop: 0,
-                                    fontWeight: 'lighter',
-                                }}
-                            >
-                                Fedlify Simplifies Collaborative, Privacy-Preserving Health AI
-                            </Title>
-                            <Paragraph>
-                                Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. By using our no-code platform, institutions can contribute to AI development without transferring sensitive data. Every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can participate confidently. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
-                            </Paragraph>
-                        </motion.div>
-                    </Col>
-                    <Col xs={24} md={12} order={1}>
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <img
-                                src="/images/who-fedlify.png"
-                                alt="Who is Fedlify For?"
-                                style={{ width: "100%", height: "auto" }}
-                            />
-                        </motion.div>
-                    </Col>
-                </Row>
-            </Card>
+                            Fedlify Simplifies Collaborative, Privacy-Preserving Health AI
+                        </Title>
+                        <Paragraph>
+                            Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. By using our no-code platform, institutions can contribute to AI development without transferring sensitive data. Every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can participate confidently. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
+                        </Paragraph>
+                    </>
+                }
+
+            />
+
         </>
     );
 };
 
-const HomePage: React.FC = () => {
-    // const { styles } = useStyles();
-    // const screens = useBreakpoint();
-
+const Features: React.FC = () => {
     return (
-        <Layout
-            style={{
-                // fontWeight: 'lighter',
-            }}
+        < Card
+            variant="borderless"
+            styles={{
+                body: {
+                    paddingTop: "5em",
+                    paddingBottom: "5em",
+                    background: "#F5F5F5",
+                    minHeight: '80vh',
+                    alignContent: 'center'
+                },
+            }
+            }
         >
-            <HeroSection />
-            <ProblemSolutionSection />
-            {/* Features section with animated cards */}
-            <Card
-                variant="borderless"
-                styles={{
-                    body: {
-                        // paddingTop: "3em",
-                        background: "#F5F5F5",
-                        // paddingBottom: "4em",
-                        height: '100vh',
-                    },
-                }}
-            // style={{
-            //     // minHeight: "100vh",
-            //     // background: "white",
-            //     padding: "5em",
-            // }}
-            >
-                <Title level={2} style={{
-                    textAlign: "center",
-                    fontWeight: 'lighter',
-                }}>
-                    How Fedlify Works
-                </Title>
-                <Row gutter={[24, 24]} justify="center">
-                    {WorkFlow.map((stage, idx) => (
-
-                        <Col key={idx} xs={24} sm={12} md={8}>
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                <Card
-                                    title={
-                                        <>
-                                            <Avatar
-                                                size={48}
+            <Title level={2} style={{
+                textAlign: "center",
+                fontWeight: 'lighter',
+            }}>
+                How Fedlify Works
+            </Title>
+            <Row gutter={[24, 24]} justify="center">
+                {WorkFlow.map((stage, idx) => (
+                    <Col key={idx} xs={24} sm={12} md={8}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <Card
+                                title={
+                                    <>
+                                        <Avatar
+                                            size={48}
+                                            style={{
+                                                zIndex: 10,
+                                                backgroundColor: '#A892AB',
+                                                // color: '#f56a00',
+                                            }}
+                                        >
+                                            {idx + 1}
+                                        </Avatar>
+                                        <Tag
+                                            color="#806484"
+                                            style={{
+                                                marginLeft: -8,
+                                                paddingLeft: "1.5em",
+                                                paddingRight: "1em",
+                                            }}>
+                                            <Text
                                                 style={{
-                                                    zIndex: 10,
-                                                    backgroundColor: '#A892AB',
-                                                    // color: '#f56a00',
+                                                    color: "white",
+                                                    // fontSize: 17,
+                                                    // fontWeight: 'lighter',
                                                 }}
                                             >
-                                                {idx + 1}
-                                            </Avatar>
-                                            <Tag
-                                                color="#806484"
-                                                style={{
-                                                    marginLeft: -8,
-                                                    paddingLeft: "1.5em",
-                                                    paddingRight: "1em",
-                                                }}>
-                                                <Text
-                                                    style={{
-                                                        color: "white",
-                                                        // fontSize: 17,
-                                                        // fontWeight: 'lighter',
-                                                    }}
-                                                >
-                                                    {stage.title}
-                                                </Text>
-                                            </Tag>
-                                        </>
-                                    }>
-
+                                                {stage.title}
+                                            </Text>
+                                        </Tag>
+                                    </>
+                                }>
+                                <Space direction="vertical">
                                     {
                                         stage.desc.map((item) => (
                                             <Space align="start">
@@ -491,50 +444,107 @@ const HomePage: React.FC = () => {
                                             </Space>
                                         ))
                                     }
-                                </Card>
+                                </Space>
+                            </Card>
 
-                            </motion.div>
-                        </Col>
+                        </motion.div>
+                    </Col>
+                ))}
+            </Row>
+        </Card >
+    );
+}
 
-
-                    ))}
-                </Row>
-            </Card>
-
-            {/* Call to Action section */}
-            <Card
-                style={{
-                    minHeight: "50vh",
-                    background: "#555573",
-                    color: "white",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    padding: "0 20px",
-                }}
+const CallToAction: React.FC = () => {
+    return (
+        <Card
+            variant="borderless"
+            style={{
+                minHeight: "50vh",
+                background: "#555573",
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                textAlign: "center",
+                padding: "0 20px",
+            }}
+        >
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 1 }}
             >
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 1 }}
-                >
-                    <Title style={{
-                        color: "white",
-                        fontWeight: 'lighter',
-                    }}>
-                        Ready to get started?</Title>
-                    <Button type="default" size="large">
-                        Contact Us
-                    </Button>
-                </motion.div>
-            </Card>
+                <Title style={{
+                    color: "white",
+                    fontWeight: 'lighter',
+                }}>
+                    Ready to get started?</Title>
+                <Button type="default" size="large">
+                    Contact Us
+                </Button>
+            </motion.div>
+        </Card>
 
+    );
+}
+const HomePage: React.FC = () => {
+    // const { styles } = useStyles();
+    // const screens = useBreakpoint();
+
+    return (
+        <Layout>
+            <HeroSection />
+            <ProblemSolutionSection />
+            <Features />
+            <CallToAction />
             {/* Footer with copyright */}
-            <Footer style={{ textAlign: "center", background: "#f0f2f5", fontWeight: 'lighter', }}>
-                ©2025 Fedlify. All rights reserved.
+            <Footer
+                // className={styles.animatedFooter}
+                style={{ background: "#f0f2f5", fontWeight: 'lighter' }}
+            >
+                <Flex wrap justify="space-evenly" gap="large">
+                    <Space.Compact direction="vertical">
+                        <Text style={{ fontSize: "lighter" }}>Contact </Text>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            dev@fedlify.com
+                        </Link>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            support@fedlify.com
+                        </Link>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            info@fedlify.com
+                        </Link>
+                    </Space.Compact>
+
+                    <Space.Compact direction="vertical">
+                        <Text style={{ fontSize: "lighter" }}>Regulatory </Text>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            Website privacy policy
+                        </Link>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            Cookie policy
+                        </Link>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            Cookie settings
+                        </Link>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            Accessibility statement
+                        </Link>
+                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
+                            Quality & Regulatory
+                        </Link>
+                    </Space.Compact>
+                    <Space direction="vertical">
+                        <Flex gap="large" align="center" justify="end">
+                            <LinkedinOutlined style={{ fontSize: 28, color: 'grey' }} />
+                            <TwitterOutlined style={{ fontSize: 28, color: 'grey' }} />
+                        </Flex>
+                        <Text style={{ fontSize: "lighter", color: 'grey' }}> ©2025 Fedlify. All rights reserved. </Text>
+                    </Space>
+                </Flex>
             </Footer>
         </Layout >
     );
