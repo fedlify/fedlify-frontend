@@ -1,27 +1,11 @@
-/*
- * HomePage - Main landing page for Fedlify
- *
- * This file implements the main landing page of the Fedlify app using React and Ant Design components.
- *
- * Key Features:
- * - Hero section with animated parallax background using a custom 3D globe network rendered with @react-three/fiber and custom shaders.
- * - Responsive layout with Ant Design's Layout, Typography, Card, Row, and Col components.
- * - Animated transitions and parallax effects using Framer Motion.
- * - Features section highlighting app strengths.
- * - Call to Action and Footer sections.
- *
- * Notable Implementation Details:
- * - The GlobeNetworkScene component uses a custom shader material to progressively draw a wireframe icosahedron, with camera animation after completion.
- * - Parallax and scroll-based animations are handled with Framer Motion's useScroll and useTransform hooks.
- * - The design is responsive and visually engaging, with a focus on modern web aesthetics.
- */
-import React, { useRef } from "react";
-import { Typography, Button, Card, Row, Col, Layout, Flex, Space, Avatar, Tag } from "antd";
+import React, { useRef, useState } from "react";
+import { Typography, Button, Card, Row, Col, Layout, Flex, Space, Avatar, Tag } from 'antd';
 import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
 import { FedlifyLogo, FedlifyLogoName, FedlifyNetwork } from "../../components";
 import { useStyles } from "./styled";
 import { Grid } from 'antd';
-import {
+import type { GetProps } from 'antd';
+import Icon, {
     CheckCircleOutlined,
     LinkedinOutlined,
     GithubOutlined,
@@ -33,53 +17,6 @@ const { useBreakpoint } = Grid;
 const { Title, Paragraph, Text, Link } = Typography;
 const { Footer } = Layout;
 
-const WorkFlow = [
-    {
-        title: "Start a Project & Invite Sites",
-        desc: [
-            "Initiate a collaboration project",
-            "Invite data custodians and research partners",
-        ]
-    },
-    {
-        title: "Manage Agreements & Permissions",
-        desc: [
-            "Secure institutional approvals and privacy agreements",
-            "Assign roles and define data use boundaries",
-        ]
-    },
-    {
-        title: "Design Your AI Workflow",
-        desc: [
-            "Use a drag-and-drop interface to build custom AI pipelines",
-            "Choose data modalities, model types, and evaluation metrics",
-        ]
-    },
-    {
-        title: "Each Site Installs the App",
-        desc:
-            [
-                "Collaborators install Fedlify locally",
-                "Connect local data sources without moving data",
-            ]
-    },
-    {
-        title: "Federated Training Begins",
-        desc:
-            [
-                "Models are trained across sites without sharing data",
-                "Updates are orchestrated securely and privately",
-            ]
-    },
-    {
-        title: "Unified Insights & Results",
-        desc: [
-            "Aggregated results are automatically collected",
-            "Dashboards visualize cross-site performance",
-        ]
-    },
-];
-
 interface FadeInTitleProps {
     text: string;
     level?: 1 | 2 | 3 | 4 | 5;
@@ -87,7 +24,7 @@ interface FadeInTitleProps {
     style?: React.CSSProperties;
 }
 
-export const FadeInTitle: React.FC<FadeInTitleProps> = ({
+const FadeInTitle: React.FC<FadeInTitleProps> = ({
     text,
     level = 2,
     delay = 0,
@@ -103,7 +40,6 @@ export const FadeInTitle: React.FC<FadeInTitleProps> = ({
             <Typography.Title
                 level={level}
                 style={{
-                    // color: "#555572",
                     fontWeight: 300,
                 }}
             >
@@ -113,9 +49,11 @@ export const FadeInTitle: React.FC<FadeInTitleProps> = ({
     );
 };
 
-// Main HomePage component for the landing page
-const HeroSection: React.FC = () => {
-    const { styles } = useStyles();
+interface HeroSectionProps {
+    heroClassName?: string;
+};
+
+const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName }) => {
     const heroRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: heroRef,
@@ -137,11 +75,12 @@ const HeroSection: React.FC = () => {
     return (
         <section
             ref={heroRef}
-            className={styles.hero}
+            className={heroClassName}
         >
             {/* Parallax background with animated globe network */}
             <motion.div
                 style={{
+                    // background: background,
                     position: "absolute",
                     top: 0,
                     left: 0,
@@ -159,7 +98,7 @@ const HeroSection: React.FC = () => {
                 align="center"
                 wrap
                 style={{
-                    height: '100vh',
+                    minHeight: '100vh',
                     width: '100%',
                 }}
             >
@@ -242,23 +181,33 @@ const HeroSection: React.FC = () => {
         </section>
     );
 };
-
-interface TwoColRowProps {
-    left: React.ReactNode;
-    right: React.ReactNode;
-    background?: string;
+interface DualColumnLayoutProps {
+    leftColumn: React.ReactNode;
+    rightColumn: React.ReactNode;
+    // background?: string;
 }
 
-const TwoColRow: React.FC<TwoColRowProps> = ({ left, right, background = 'white' }) => {
+interface SlideInColumnProps {
+    children: React.ReactNode;
+    x: number;
+}
+
+const SlideInColumn: React.FC<SlideInColumnProps> = ({ x, children }) => {
     return (
-        <Card
-            variant="borderless"
-            styles={{
-                body: {
-                    background: background,
-                },
-            }}
+        <motion.div
+            initial={{ opacity: 0, x: x }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
         >
+            {children}
+        </motion.div>
+    );
+}
+
+const DualColumnLayout: React.FC<DualColumnLayoutProps> = ({ leftColumn, rightColumn }) => {
+    return (
+        <Card variant="borderless">
             <Row
                 gutter={[32, 32]}
                 style={{
@@ -268,113 +217,153 @@ const TwoColRow: React.FC<TwoColRowProps> = ({ left, right, background = 'white'
                 }}
             >
                 <Col xs={24} md={12}>
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        {left}
-                    </motion.div>
+                    <SlideInColumn x={-50}>
+                        {leftColumn}
+                    </SlideInColumn>
                 </Col>
                 <Col xs={24} md={12}>
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        {right}
-                    </motion.div>
+                    <SlideInColumn x={50}>
+                        {rightColumn}
+                    </SlideInColumn>
+
                 </Col>
             </Row>
         </Card>
     )
 };
 
-const ProblemSolutionSection: React.FC = () => {
+interface ProblemSectionProps {
+    videoClassName?: string;
+};
+
+const ProblemSection: React.FC<ProblemSectionProps> = ({ videoClassName }) => {
     return (
-        <>
-            <TwoColRow
-                left={<>
+        <DualColumnLayout
+            leftColumn={<>
+                <Title level={2}
+                    style={{
+                        fontWeight: 'lighter',
+                    }}
+                >
+                    Fragmented Data, Fragmented AI
+                </Title>
+                <Paragraph>
+                    Healthcare data is sensitive, siloed, and regulated.
+                    As a result, data remains locked within institutional boundaries, with very limited sharing or collaboration. This fragmentation restricts access to diverse, high-quality datasets—an essential ingredient for building robust AI models.
+                </Paragraph>
+                <Paragraph>
+                    Consequently, AI development in healthcare is also fragmented, often limited to single-center models that lack generalizability, scalability, and inclusivity. Sparse multi-institutional collaboration undermines the full potential of AI to transform healthcare at scale.
+                </Paragraph>
+                <Paragraph>
+                    Privacy-preserving methods offer a promising alternative: they allow institutions to collaborate without transferring sensitive data, enabling access to insights and patterns across partners. However, these approaches remain largely underutilized.
+                </Paragraph>
+                <Paragraph>
+                    For instance, a recent analysis found that out of more than 3,000 patient-level AI studies conducted in Canada, fewer than 0.1% employed decentralized, privacy-preserving techniques.
+                </Paragraph>
+                <Paragraph>
+                    Technical complexity, lack of accessible tools, and organizational and regulatory hurdles continue to limit broader adoption—leaving both data and AI development fragmented.
+                </Paragraph>
+            </>
+            }
+            rightColumn={
+                <video
+                    className={videoClassName}
+                    controls
+                    // poster="thumbnail.jpg"
+                    preload="metadata"
+                    aria-label="Problem domain"
+                >
+                    <source src="/video/problem-domain.mp4" type="video/mp4" />
+                    Your browser doesn’t support HTML5 video. You can
+                    <a href="/video/problem-domain.mp4">download it here</a>.
+                </video>
+            }
+        />
+    );
+};
+
+interface ProblemSectionProps {
+    imageClassName?: string;
+};
+
+const SolutionSection: React.FC<ProblemSectionProps> = ({ imageClassName }) => {
+    return (
+        <DualColumnLayout
+            leftColumn={
+                <img
+                    className={imageClassName}
+                    src="/images/who-fedlify.png"
+                    alt="Who is Fedlify For?"
+                />
+            }
+            rightColumn={
+                <>
                     <Title level={2}
                         style={{
                             fontWeight: 'lighter',
                         }}
                     >
-                        Fragmented Data, Fragmented AI
+                        Fedlify Simplifies Collaborative, Privacy-Preserving Health AI
                     </Title>
                     <Paragraph>
-                        Healthcare data is sensitive, siloed, and regulated.
-                        As a result, data remains locked within institutional boundaries, with very limited sharing or collaboration. This fragmentation restricts access to diverse, high-quality datasets—an essential ingredient for building robust AI models.
-                    </Paragraph>
-                    <Paragraph>
-                        Consequently, AI development in healthcare is also fragmented, often limited to single-center models that lack generalizability, scalability, and inclusivity. Sparse multi-institutional collaboration undermines the full potential of AI to transform healthcare at scale.
-                    </Paragraph>
-                    <Paragraph>
-                        Privacy-preserving methods offer a promising alternative: they allow institutions to collaborate without transferring sensitive data, enabling access to insights and patterns across partners. However, these approaches remain largely underutilized.
-                    </Paragraph>
-                    <Paragraph>
-                        For instance, a recent analysis found that out of more than 3,000 patient-level AI studies conducted in Canada, fewer than 0.1% employed decentralized, privacy-preserving techniques.
-                    </Paragraph>
-                    <Paragraph>
-                        Technical complexity, lack of accessible tools, and organizational and regulatory hurdles continue to limit broader adoption—leaving both data and AI development fragmented.
+                        Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. By using our no-code platform, institutions can contribute to AI development without transferring sensitive data. Every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can participate confidently. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
                     </Paragraph>
                 </>
-                }
-                right={
-                    <video
-                        style={{
-                            width: '100%',
-                            height: 'auto',
-                            border: '1px solid lightgrey',
-                            borderRadius: '8px'
-                        }}
-                        controls
-                        // poster="thumbnail.jpg"
-                        preload="metadata"
-                        aria-label="Problem domain"
-                    >
-                        <source src="/video/problem-domain.mp4" type="video/mp4" />
-                        Your browser doesn’t support HTML5 video. You can
-                        <a href="/video/problem-domain.mp4">download it here</a>.
-                    </video>
-                }
-            />
-
-            <TwoColRow
-                background="linear-gradient(to bottom right, white, #f8f7f462)"
-                left={
-                    <img
-                        src="/images/who-fedlify.png"
-                        alt="Who is Fedlify For?"
-                        style={{ width: "100%", height: "auto" }}
-                    />
-                }
-                right={
-                    <>
-                        <Title level={2}
-                            // type="secondary"
-                            style={{
-                                // marginTop: 0,
-                                fontWeight: 'lighter',
-                            }}
-                        >
-                            Fedlify Simplifies Collaborative, Privacy-Preserving Health AI
-                        </Title>
-                        <Paragraph>
-                            Fedlify eliminates the technical and privacy hurdles that hinder collaborative AI development in healthcare. By using our no-code platform, institutions can contribute to AI development without transferring sensitive data. Every stakeholder—from healthcare researchers and data custodians to AI developers and IT managers—can participate confidently. Built on privacy-preserving federated learning, Fedlify ensures secure, scalable, and equitable collaboration across diverse institutional settings.
-                        </Paragraph>
-                    </>
-                }
-
-            />
-
-        </>
+            }
+        />
     );
 };
 
-const Features: React.FC = () => {
+interface WorkFlowSectionProps {
+    background?: string;
+};
+const WorkFlowSection: React.FC<WorkFlowSectionProps> = ({ background }) => {
+    const Steps = [
+        {
+            title: "Start a Project & Invite Sites",
+            desc: [
+                "Initiate a collaboration project",
+                "Invite data custodians and research partners",
+            ]
+        },
+        {
+            title: "Manage Agreements & Permissions",
+            desc: [
+                "Secure institutional approvals and privacy agreements",
+                "Assign roles and define data use boundaries",
+            ]
+        },
+        {
+            title: "Design Your AI Workflow",
+            desc: [
+                "Use a drag-and-drop interface to build custom AI pipelines",
+                "Choose data modalities, model types, and evaluation metrics",
+            ]
+        },
+        {
+            title: "Each Site Installs the App",
+            desc:
+                [
+                    "Collaborators install Fedlify locally",
+                    "Connect local data sources without moving data",
+                ]
+        },
+        {
+            title: "Federated Training Begins",
+            desc:
+                [
+                    "Models are trained across sites without sharing data",
+                    "Updates are orchestrated securely and privately",
+                ]
+        },
+        {
+            title: "Unified Insights & Results",
+            desc: [
+                "Aggregated results are automatically collected",
+                "Dashboards visualize cross-site performance",
+            ]
+        },
+    ];
     return (
         < Card
             variant="borderless"
@@ -382,21 +371,22 @@ const Features: React.FC = () => {
                 body: {
                     paddingTop: "5em",
                     paddingBottom: "5em",
-                    background: "#F5F5F5",
+                    background: background,
                     minHeight: '80vh',
                     alignContent: 'center'
                 },
-            }
-            }
+            }}
         >
-            <Title level={2} style={{
-                textAlign: "center",
-                fontWeight: 'lighter',
-            }}>
+            <Title
+                level={2}
+                style={{
+                    textAlign: "center",
+                    fontWeight: 'lighter',
+                }}>
                 How Fedlify Works
             </Title>
             <Row gutter={[24, 24]} justify="center">
-                {WorkFlow.map((stage, idx) => (
+                {Steps.map((stage, idx) => (
                     <Col key={idx} xs={24} sm={12} md={8}>
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
@@ -405,6 +395,12 @@ const Features: React.FC = () => {
                             transition={{ duration: 0.8 }}
                         >
                             <Card
+                                styles={{
+                                    body: {
+                                        // background: "#2D2E36",
+                                    },
+                                }}
+
                                 title={
                                     <>
                                         <Avatar
@@ -456,6 +452,23 @@ const Features: React.FC = () => {
     );
 }
 
+interface FadeInProps {
+    children: React.ReactNode;
+}
+
+const FadeIn: React.FC<FadeInProps> = ({ children }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1 }}
+        >
+            {children}
+        </motion.div>
+    );
+};
+
 const CallToAction: React.FC = () => {
     return (
         <Card
@@ -472,90 +485,175 @@ const CallToAction: React.FC = () => {
                 padding: "0 20px",
             }}
         >
-            <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 1 }}
-            >
-                <Title style={{
-                    color: "white",
-                    fontWeight: 'lighter',
-                }}>
-                    Ready to get started?</Title>
+            <FadeIn>
+                <Title
+                    style={{
+                        color: "white",
+                        fontWeight: 'lighter',
+                    }}
+                >
+                    Ready to get started?
+                </Title>
                 <Button type="default" size="large">
                     Contact Us
                 </Button>
-            </motion.div>
+            </FadeIn>
         </Card>
-
     );
 }
-const HomePage: React.FC = () => {
-    // const { styles } = useStyles();
-    // const screens = useBreakpoint();
+
+type XIconComponentProps = GetProps<typeof Icon>;
+
+interface XSvgProps {
+    width?: number | string;
+    height?: number | string;
+    fill?: string;
+}
+const XSvg: React.FC<XSvgProps> = ({
+    width = '1em',
+    height = '1em',
+    fill = 'currentColor'
+}) => (
+    <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        width={width}
+        height={height}
+    >
+        <path
+            fill={fill}
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+        />
+    </svg>
+)
+
+const XLogo = (props: Partial<XIconComponentProps>) => {
+    return (
+        <Icon component={XSvg} {...props} />
+    );
+};
+
+const useHoverColor = () => {
+    const [hovered, setHovered] = useState(false);
+    const { theme } = useStyles();
+
+    const hoveredColor = theme.appearance === 'dark' ? 'white' : 'black';
+
+    return {
+        hovered,
+        setHovered,
+        color: hovered ? hoveredColor : 'grey',
+    };
+};
+
+const HoverLink: React.FC<{ href: string; text: string }> = ({ href, text }) => {
+    const { color, setHovered } = useHoverColor();
 
     return (
-        <Layout>
-            <HeroSection />
-            <ProblemSolutionSection />
-            <Features />
-            <CallToAction />
-            {/* Footer with copyright */}
-            <Footer
-                // className={styles.animatedFooter}
-                style={{ background: "#f0f2f5", fontWeight: 'lighter' }}
-            >
+        <Link
+            style={{
+                fontSize: 15,
+                color: color,
+                transition: 'color 0.3s',
+            }}
+            href={href}
+            target="_blank"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
+            {text}
+        </Link>
+    );
+};
+
+const socialLinks = [
+    { icon: <LinkedinOutlined />, href: 'https://www.linkedin.com/company/fedlify' },
+    { icon: <XLogo />, href: 'https://x.com/fedlify' },
+    { icon: <GithubOutlined />, href: 'https://github.com/fedlify' },
+    { icon: <DiscordOutlined />, href: 'https://discord.gg/fedlify' },
+];
+
+interface SocialIconProps {
+    icon: React.ReactNode;
+    href: string;
+}
+
+const SocialIcon: React.FC<SocialIconProps> = ({ icon, href }) => {
+    const { color, setHovered } = useHoverColor();
+
+    return (
+        <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: 24, color: color, transition: 'color 0.3s' }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
+            {icon}
+        </a>
+    );
+};
+
+const FooterSection: React.FC = () => {
+    return (
+        <Footer
+            style={{
+                fontWeight: 'lighter'
+            }}
+        >
+            <FadeIn>
                 <Flex wrap justify="space-evenly" gap="large">
                     <Space.Compact direction="vertical">
                         <Text style={{ fontSize: "lighter" }}>Contact </Text>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            dev@fedlify.com
-                        </Link>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            support@fedlify.com
-                        </Link>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            info@fedlify.com
-                        </Link>
+                        <HoverLink href="mailto:dev@fedlify.com" text="dev@fedlify.com" />
+                        <HoverLink href="mailto:support@fedlify.com" text="support@fedlify.com" />
+                        <HoverLink href="mailto:info@fedlify.com" text="info@fedlify.com" />
                     </Space.Compact>
 
                     <Space.Compact direction="vertical">
                         <Text style={{ fontSize: "lighter" }}>Regulatory </Text>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            Website privacy policy
-                        </Link>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            Cookie policy
-                        </Link>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            Cookie settings
-                        </Link>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            Accessibility statement
-                        </Link>
-                        <Link style={{ fontSize: 15, color: 'grey' }} href="https://ant.design" target="_blank">
-                            Quality & Regulatory
-                        </Link>
+                        <HoverLink href="/privacy-policy" text="Website privacy policy" />
+                        <HoverLink href="/cookie-policy" text="Cookie policy" />
+                        <HoverLink href="/cookie-settings" text="Cookie settings" />
+                        <HoverLink href="/accessibility" text="Accessibility statement" />
+                        <HoverLink href="/quality-and-regulatory" text="Quality & Regulatory" />
                     </Space.Compact>
                     <Space direction="vertical">
                         <Flex gap="large" align="center" justify="center">
                             <FedlifyLogo width={42} />
                         </Flex>
                         <Flex style={{ marginTop: 12 }} gap="large" align="center" justify="center">
-                            <LinkedinOutlined style={{ fontSize: 22, color: 'grey' }} />
-                            <svg viewBox="0 0 24 24" aria-hidden="true"
-                                style={{ width: 22, height: 22 }}  >
-                                <path fill="grey" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                            </svg>
-                            <GithubOutlined style={{ fontSize: 22, color: 'grey' }} />
-                            <DiscordOutlined style={{ fontSize: 22, color: 'grey' }} />
+                            {socialLinks.map(({ icon, href }, idx) => (
+                                <SocialIcon key={idx} icon={icon} href={href} />
+                            ))}
                         </Flex>
-                        <Text style={{ fontSize: "lighter", color: 'grey' }}> ©2025 Fedlify. All rights reserved. </Text>
-
+                        <Text
+                            style={{
+                                fontSize: "lighter",
+                                color: 'grey',
+                            }}
+                        >
+                            ©2025 Fedlify. All rights reserved.
+                        </Text>
                     </Space>
-                </Flex>
-            </Footer>
+                </Flex >
+            </FadeIn>
+        </Footer >
+    );
+}
+
+const HomePage: React.FC = () => {
+    const { styles, theme } = useStyles();
+
+    return (
+        <Layout>
+            <HeroSection heroClassName={styles.hero} />
+            <ProblemSection videoClassName={styles.videoBorder} />
+            <SolutionSection imageClassName={styles.imageBorder} />
+            <WorkFlowSection background={theme.appearance === 'dark' ? '#202123' : '#F5F5F5'} />
+            <CallToAction />
+            <FooterSection />
         </Layout >
     );
 };

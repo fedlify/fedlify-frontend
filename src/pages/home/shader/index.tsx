@@ -108,7 +108,7 @@ export const FedlifyNetwork: React.FC = () => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                // background: 'white', // match the dark theme
+                background: 'white', // match the dark theme
                 zIndex: 0,
             }}
             camera={{ position: [0, 0, 8] }}>
