@@ -550,7 +550,7 @@ const HoverLink: React.FC<{ href: string; text: string }> = ({ href, text }) => 
         <Link
             style={{
                 fontSize: 15,
-                textShadow: hovered ? "2px 2px 5px rgba(0, 0, 0, 0.3)": "",
+                textShadow: hovered ? "2px 2px 5px rgba(0, 0, 0, 0.3)" : "",
                 color: color,
                 transition: 'color 0.3s',
             }}
@@ -608,9 +608,8 @@ const FooterSection: React.FC<FooterSectionProps> = ({ isDarkMode = false }) => 
                 <Flex wrap justify="space-evenly" gap="large">
                     <Space.Compact direction="vertical">
                         <Text style={{ fontSize: "lighter" }}>Contact </Text>
-                        <HoverLink href="mailto:dev@fedlify.com" text="dev@fedlify.com" />
-                        <HoverLink href="mailto:support@fedlify.com" text="support@fedlify.com" />
-                        <HoverLink href="mailto:info@fedlify.com" text="info@fedlify.com" />
+                        <HoverLink href="mailto:support@fedlify.com" text="Support Team" />
+                        <HoverLink href="mailto:dev@fedlify.com" text="Engineering Team" />
                     </Space.Compact>
 
                     <Space.Compact direction="vertical">
