@@ -56,10 +56,12 @@ const getThemeModeConfig = (mode: Mode): ThemeConfig => {
   };
 
   const modeDependentButtonTokens = {
-    light: {},
+    light: {
+
+    },
     dark: {
       // defaultActiveColor: '#2D2E36',
-      defaultBg: '#202123',
+      defaultBg: '#353740',
     },
   };
 
@@ -92,17 +94,21 @@ const getThemeModeConfig = (mode: Mode): ThemeConfig => {
       ...modeDependentCardTokens[mode]
     },
     Button: {
+      primaryShadow: '0', // remove boxshadow
+      colorPrimaryHover: "#987b9b",
       ...modeDependentButtonTokens[mode]
     },
   }
 
+  const isDarkMode = (mode === "dark");
+
   return {
     token: {
-      colorPrimary: "#634168ff",
+      colorPrimary: isDarkMode ? "#806484" : "#806484",
       fontFamily: "Noto Sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
       fontSize: 18,
     },
-    algorithm: mode === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
+    algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
     // algorithm: theme.darkAlgorithm,
     components,
   };

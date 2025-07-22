@@ -51,9 +51,10 @@ const FadeInTitle: React.FC<FadeInTitleProps> = ({
 
 interface HeroSectionProps {
     heroClassName?: string;
+    isDarkMode?: boolean;
 };
 
-const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = false }) => {
     const heroRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: heroRef,
@@ -118,6 +119,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName }) => {
                             height: "auto"
                         }}
                         delay={1.8}
+                        isDarkMode={isDarkMode}
                     />
                     <Flex
                         justify="center"
@@ -131,6 +133,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName }) => {
                                 height: "auto",
                             }}
                             delay={2}
+                            isDarkMode={isDarkMode}
                         />
                         <Flex
                             wrap
@@ -317,6 +320,7 @@ const SolutionSection: React.FC<ProblemSectionProps> = ({ imageClassName }) => {
 interface WorkFlowSectionProps {
     background?: string;
 };
+
 const WorkFlowSection: React.FC<WorkFlowSectionProps> = ({ background }) => {
     const Steps = [
         {
@@ -395,12 +399,6 @@ const WorkFlowSection: React.FC<WorkFlowSectionProps> = ({ background }) => {
                             transition={{ duration: 0.8 }}
                         >
                             <Card
-                                styles={{
-                                    body: {
-                                        // background: "#2D2E36",
-                                    },
-                                }}
-
                                 title={
                                     <>
                                         <Avatar
@@ -408,7 +406,6 @@ const WorkFlowSection: React.FC<WorkFlowSectionProps> = ({ background }) => {
                                             style={{
                                                 zIndex: 10,
                                                 backgroundColor: '#A892AB',
-                                                // color: '#f56a00',
                                             }}
                                         >
                                             {idx + 1}
@@ -494,7 +491,7 @@ const CallToAction: React.FC = () => {
                 >
                     Ready to get started?
                 </Title>
-                <Button type="default" size="large">
+                <Button type="primary" size="large">
                     Contact Us
                 </Button>
             </FadeIn>
@@ -547,12 +544,13 @@ const useHoverColor = () => {
 };
 
 const HoverLink: React.FC<{ href: string; text: string }> = ({ href, text }) => {
-    const { color, setHovered } = useHoverColor();
+    const { color, setHovered, hovered } = useHoverColor();
 
     return (
         <Link
             style={{
                 fontSize: 15,
+                textShadow: hovered ? "2px 2px 5px rgba(0, 0, 0, 0.3)": "",
                 color: color,
                 transition: 'color 0.3s',
             }}
@@ -595,7 +593,11 @@ const SocialIcon: React.FC<SocialIconProps> = ({ icon, href }) => {
     );
 };
 
-const FooterSection: React.FC = () => {
+interface FooterSectionProps {
+    isDarkMode?: boolean;
+};
+
+const FooterSection: React.FC<FooterSectionProps> = ({ isDarkMode = false }) => {
     return (
         <Footer
             style={{
@@ -621,7 +623,7 @@ const FooterSection: React.FC = () => {
                     </Space.Compact>
                     <Space direction="vertical">
                         <Flex gap="large" align="center" justify="center">
-                            <FedlifyLogo width={42} />
+                            <FedlifyLogo width={42} isDarkMode={isDarkMode} />
                         </Flex>
                         <Flex style={{ marginTop: 12 }} gap="large" align="center" justify="center">
                             {socialLinks.map(({ icon, href }, idx) => (
@@ -645,15 +647,15 @@ const FooterSection: React.FC = () => {
 
 const HomePage: React.FC = () => {
     const { styles, theme } = useStyles();
-
+    const isDarkMode = theme.appearance === 'dark';
     return (
         <Layout>
-            <HeroSection heroClassName={styles.hero} />
+            <HeroSection heroClassName={styles.hero} isDarkMode={isDarkMode} />
             <ProblemSection videoClassName={styles.videoBorder} />
             <SolutionSection imageClassName={styles.imageBorder} />
-            <WorkFlowSection background={theme.appearance === 'dark' ? '#202123' : '#F5F5F5'} />
+            <WorkFlowSection background={isDarkMode ? '#202123' : '#F5F5F5'} />
             <CallToAction />
-            <FooterSection />
+            <FooterSection isDarkMode={isDarkMode} />
         </Layout >
     );
 };
