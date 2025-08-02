@@ -48,8 +48,7 @@
 
 [data-theme=dark] {
     color: #fff; /* Fallback for older Safari */
-    background-color: #000; /* Fallback for older Safari */
-    color-scheme: dark
+    color-scheme: dark;
 }
 
 * {

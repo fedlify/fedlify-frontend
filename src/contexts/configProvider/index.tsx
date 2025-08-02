@@ -104,9 +104,10 @@ const getThemeModeConfig = (mode: Mode): ThemeConfig => {
 
   return {
     token: {
-      colorPrimary: isDarkMode ? "#806484" : "#806484",
+      // colorPrimary: isDarkMode ? "#806484" : "#806484",
+      colorPrimary: "#806484",
       fontFamily: "Noto Sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
-      fontSize: 18,
+      fontSize: 16,
     },
     algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
     // algorithm: theme.darkAlgorithm,
@@ -118,8 +119,8 @@ export const ConfigProviderContext = createContext<
   ConfigProviderContext | undefined
 >(undefined);
 
-const defaultMode: Mode = (localStorage.getItem("theme") as Mode) || "light";
-// const defaultMode: Mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+// const defaultMode: Mode = (localStorage.getItem("theme") as Mode) || "light";
+const defaultMode: Mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 type ConfigProviderProps = {
   theme?: ThemeConfig;

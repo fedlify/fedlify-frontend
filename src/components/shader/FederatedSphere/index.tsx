@@ -30,7 +30,6 @@ export const WireShaderMaterial = shaderMaterial(
 // Register the custom shader material with React Three Fiber
 extend({ WireShaderMaterial });
 
-
 // Add types to ThreeElements elements so primitives pick up on it
 // see https://r3f.docs.pmnd.rs/api/typescript#extending-threeelements
 declare module '@react-three/fiber' {
@@ -98,7 +97,7 @@ const GlobeNetworkScene: React.FC = () => {
 };
 
 // Canvas wrapper for the animated globe network background
-export const FedlifyNetwork: React.FC = () => {
+export const FederatedSphere: React.FC = () => {
     return (
         <Canvas
             style={{

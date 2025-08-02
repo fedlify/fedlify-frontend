@@ -20,7 +20,7 @@ type IUser = {
   avatar: string;
 };
 
-export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
+export const ThemedHeaderV2: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   sticky = true,
 }) => {
   const { token } = useToken();
@@ -28,7 +28,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   // const { mode, setMode } = useContext(ConfigProviderContext);
 
   const headerStyles: React.CSSProperties = {
-    backgroundColor: token.colorBgElevated,
+    backgroundColor: token.colorBgLayout,
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",

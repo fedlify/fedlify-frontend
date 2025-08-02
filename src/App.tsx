@@ -1,20 +1,21 @@
 import { Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-
 import { useNotificationProvider } from "@refinedev/antd";
-import "@refinedev/antd/dist/reset.css";
-
 import routerBindings, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
 import dataProvider from "@refinedev/simple-rest";
 import { App as AntdApp } from "antd";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Routes } from "react-router";
 import { ConfigProvider } from "./contexts";
-import HomePage from "./pages/home";
+import { getRoute as getHomeRoute } from "./pages/home";
+import { getRoute as getAuthRoute, getResources as getAuthResources } from "./pages/auth";
+import { getRoute as getDashboardRoute, getResources as getDashboardResources } from "./pages/dashboard";
 import { useTranslation } from "react-i18next";
+import { apiProvider } from "./providers";
+import "@refinedev/antd/dist/reset.css";
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -25,6 +26,14 @@ function App() {
     getLocale: () => i18n.language,
   };
 
+  const [authProvider/*, dataProvider*/] = apiProvider(
+    {
+      appId: "e0727kP32BOSSysO8hK4nPYvSMhDj2GN",
+      javascriptKey: "bqlDbSbwej4vZTKQzE1ZOtddtf1CcovV",
+      serverURL: "http://localhost:1337/hivebridge"
+    }
+  );
+
   return (
     <BrowserRouter>
       <RefineKbarProvider>
@@ -33,6 +42,7 @@ function App() {
             <DevtoolsProvider>
               <Refine
                 dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+                authProvider={authProvider}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
                 i18nProvider={i18nProvider}
@@ -42,16 +52,16 @@ function App() {
                   useNewQueryKeys: true,
                   projectId: "PysoNN-hXte4H-8HUuiy",
                 }}
-              // resources={[
-              //   {
-              //     name: "home",
-              //     list: "/",
-              //     meta: { label: "Home" },
-              //   }
-              // ]}
+                resources={[
+                  ...getDashboardResources(),
+                  // ...getHomeResources(),
+                  ...getAuthResources(),
+                ]}
               >
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
+                  {getDashboardRoute()}
+                  {getHomeRoute()}
+                  {getAuthRoute()}
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />

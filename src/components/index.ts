@@ -1,4 +1,6 @@
-export { Header } from "./header";
 export * from "./icons";
-export * from "../pages/home/shader";
+export * from "./shader";
+export * from "./layout";
+export * from "./paginationTotal";
+export * from "./auth";
 
