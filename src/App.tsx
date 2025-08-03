@@ -8,7 +8,8 @@ import routerBindings, {
 } from "@refinedev/react-router";
 import dataProvider from "@refinedev/simple-rest";
 import { App as AntdApp } from "antd";
-import { BrowserRouter, Routes } from "react-router";
+import { PageNotFound } from "./components";
+import { BrowserRouter, Routes, Route } from "react-router";
 import { ConfigProvider } from "./contexts";
 import { getRoute as getHomeRoute } from "./pages/home";
 import { getRoute as getAuthRoute, getResources as getAuthResources } from "./pages/auth";
@@ -62,6 +63,7 @@ function App() {
                   {getDashboardRoute()}
                   {getHomeRoute()}
                   {getAuthRoute()}
+                  <Route path="*" element={<PageNotFound />} />
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />

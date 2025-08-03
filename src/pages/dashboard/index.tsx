@@ -7,18 +7,19 @@ import { Card as AntdCard } from "antd";
 import { ShoppingOutlined } from "@ant-design/icons";
 import { CategoryList } from "./categories";
 
+// see https://refine.dev/docs/routing/integrations/react-router/
 export const getRoute = (): React.ReactElement => {
     return (
         <Route
             element={
                 <Authenticated
                     key="authenticated-routes"
-                    fallback={<CatchAllNavigate to="/login" />}
+                    fallback={<CatchAllNavigate to="/auth/login" />}
                 >
                     <AppThemedLayoutV2
                         // Title={Title}
                         initialSiderCollapsed={true}
-                        onSiderCollapsed={() => { }}
+                        // onSiderCollapsed={() => { }}
                     >
                         <AntdCard
                             style={{
@@ -41,6 +42,7 @@ export const getRoute = (): React.ReactElement => {
     );
 }
 
+// see https://refine.dev/docs/routing/integrations/react-router/
 export const getResources = (): ResourceProps[] => {
     return [
         {

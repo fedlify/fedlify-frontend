@@ -2,25 +2,12 @@ import React from "react";
 import {
   ForgotPasswordPageProps,
   ForgotPasswordFormTypes,
-  useRouterType,
   useLink,
   useTranslate,
-  useRouterContext,
   useForgotPassword,
 } from "@refinedev/core";
-import { ThemedTitleV2 } from "@refinedev/antd";
 import {
-  layoutStyles,
-  containerStyles,
-  titleStyles,
-  headStyles,
-  bodyStyles,
-} from "./styles";
-import {
-  Row,
-  Col,
-  Layout,
-  Card,
+  Flex,
   Typography,
   Form,
   Input,
@@ -30,6 +17,9 @@ import {
   FormProps,
   theme,
 } from "antd";
+import { AuthCard } from "../authCard";
+import { AuthLayout } from "../authLayout";
+import { AuthPageTitle } from "../authPageTitle";
 
 type ResetPasswordProps = ForgotPasswordPageProps<
   LayoutProps,
@@ -55,54 +45,18 @@ export const ForgotPasswordPage: React.FC<ResetPasswordProps> = ({
   const { token } = theme.useToken();
   const [form] = Form.useForm<ForgotPasswordFormTypes>();
   const translate = useTranslate();
-  const routerType = useRouterType();
   const Link = useLink();
-  const { Link: LegacyLink } = useRouterContext();
-
-  const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
 
   const { mutate: forgotPassword, isPending, isSuccess } =
     useForgotPassword<ForgotPasswordFormTypes>();
 
-  const PageTitle =
-    title === false ? null : (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "32px",
-          fontSize: "20px",
-        }}
-      >
-        {title ?? <ThemedTitleV2 collapsed={false} />}
-      </div>
-    );
+  const PageTitle = (<AuthPageTitle title={title} />)
 
-  const CardTitle = (
-    <Typography.Title
-      level={3}
-      style={{
-        color: token.colorPrimaryTextHover,
-        ...titleStyles,
-      }}
-    >
-      {translate("pages.forgotPassword.title", "Forgot your password?")}
-    </Typography.Title>
-  );
   const CardContent = (
-    <Card
-      title={CardTitle}
-      // headStyle={headStyles}
-      // bodyStyle={bodyStyles}
-      styles={{
-        body: bodyStyles,
-        header: headStyles
-      }}
-      style={{
-        ...containerStyles,
-        backgroundColor: token.colorBgElevated,
-      }}
-      {...(contentProps ?? {})}
+    <AuthCard
+      title={translate("pages.forgotPassword.title", "Forgot your password?")}
+      contentProps={contentProps}
+      token={token}
     >
       <Form<ForgotPasswordFormTypes>
         layout="vertical"
@@ -112,7 +66,6 @@ export const ForgotPasswordPage: React.FC<ResetPasswordProps> = ({
         {...formProps}
       >
         <Form.Item
-
           name="email"
           label={translate("pages.forgotPassword.fields.email", "Email")}
           rules={[
@@ -145,11 +98,8 @@ export const ForgotPasswordPage: React.FC<ResetPasswordProps> = ({
             </Typography.Paragraph>
           )
         }
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
+        <Flex
+          justify="space-between"
         >
           {loginLink ?? (
             <Typography.Text
@@ -162,18 +112,23 @@ export const ForgotPasswordPage: React.FC<ResetPasswordProps> = ({
                 "pages.register.buttons.haveAccount",
                 "Have an account? "
               )}{" "}
-              <ActiveLink
+              <Link
+                go={{
+                  to: {
+                    resource: "login",
+                    action: "list",
+                  },
+                }}
                 style={{
                   fontWeight: "bold",
                   color: token.colorPrimaryTextHover,
                 }}
-                to="/login"
               >
                 {translate("pages.login.signin", "Sign in")}
-              </ActiveLink>
+              </Link>
             </Typography.Text>
           )}
-        </div>
+        </Flex>
         <Form.Item
           style={{
             marginTop: "24px",
@@ -194,30 +149,19 @@ export const ForgotPasswordPage: React.FC<ResetPasswordProps> = ({
           </Button>
         </Form.Item>
       </Form>
-    </Card>
+    </AuthCard>
   );
 
   return (
-    <Layout style={layoutStyles} {...(wrapperProps ?? {})}>
-      <Row
-        justify="center"
-        align="middle"
-        style={{
-          padding: "16px 0",
-          minHeight: "100dvh",
-        }}
-      >
-        <Col xs={22}>
-          {renderContent ? (
-            renderContent(CardContent, PageTitle)
-          ) : (
-            <>
-              {PageTitle}
-              {CardContent}
-            </>
-          )}
-        </Col>
-      </Row>
-    </Layout>
+    <AuthLayout wrapperProps={wrapperProps}>
+      {renderContent ? (
+        renderContent(CardContent, PageTitle)
+      ) : (
+        <>
+          {PageTitle}
+          {CardContent}
+        </>
+      )}
+    </AuthLayout>
   );
 };

@@ -249,7 +249,7 @@ const onError = async (error: any): Promise<OnErrorResponse> => {
 };
 
 // -----------------------------
-// AuthProvider Export
+// see https://refine.dev/docs/authentication/auth-provider/
 // -----------------------------
 export const authProvider: AuthProvider = {
   login,

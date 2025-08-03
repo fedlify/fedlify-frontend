@@ -2,28 +2,12 @@ import React, { useRef } from "react";
 import {
   RegisterPageProps,
   RegisterFormTypes,
-  useRouterType,
   useLink,
-  useActiveAuthProvider,
   useTranslate,
-  useRouterContext,
   useRegister,
   useNotification
 } from "@refinedev/core";
-import { ThemedTitleV2 } from "@refinedev/antd";
 import {
-  layoutStyles,
-  containerStyles,
-  titleStyles,
-  headStyles,
-  bodyStyles,
-  useProgressStyle
-} from "./styles";
-import {
-  Row,
-  Col,
-  Layout,
-  Card,
   Typography,
   Form,
   Input,
@@ -31,14 +15,16 @@ import {
   LayoutProps,
   CardProps,
   FormProps,
-  Divider,
   theme,
   Progress,
   Flex
 } from "antd";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { GoogleLogin } from '@react-oauth/google';
-import { getPasswordStrength, passwordPattern, passwordFormatError } from './password';
+import { getPasswordStrength, passwordPattern, passwordFormatError, usePasswordStrengStyle } from '../passwordStrengthMeter';
+import { AuthPageTitle } from "../authPageTitle";
+import { AuthCard } from "../authCard";
+import { ProviderButtons } from "../providerButtons";
+import { AuthLayout } from "../authLayout";
 
 type RegisterProps = RegisterPageProps<LayoutProps, CardProps, FormProps>;
 type RegisterFormExtended = RegisterFormTypes & {
@@ -68,16 +54,9 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   const { token } = theme.useToken();
   const [form] = Form.useForm<RegisterFormExtended>();
   const translate = useTranslate();
-  const routerType = useRouterType();
   const Link = useLink();
-  const { Link: LegacyLink } = useRouterContext();
 
-  const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
-
-  const authProvider = useActiveAuthProvider();
-  const { mutate: register, isPending } = useRegister<RegisterFormExtended>({
-    v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
-  });
+  const { mutate: register, isPending } = useRegister<RegisterFormExtended>();
 
   const onFinish = React.useCallback(async (values: RegisterFormExtended) => {
     if (!executeRecaptcha) {
@@ -100,111 +79,25 @@ export const RegisterPage: React.FC<RegisterProps> = ({
     }
   }, [executeRecaptcha]);
 
-  const { styles: progressStyle } = useProgressStyle();
-
+  const { styles: progressStyle } = usePasswordStrengStyle();
   const { score, label, color } = getPasswordStrength(Form.useWatch('password', form) ?? '');
-
   const passwordInputRef = useRef<HTMLDivElement>(null);
 
-  const PageTitle =
-    title === false ? null : (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "32px",
-          fontSize: "20px",
-        }}
-      >
-        {title ?? <ThemedTitleV2 collapsed={false} />}
-      </div>
-    );
-
-  const CardTitle = (
-    <Typography.Title
-      level={3}
-      style={{
-        color: token.colorPrimaryTextHover,
-        ...titleStyles,
-      }}
-    >
-      {translate("pages.register.title", "Sign up for your account")}
-    </Typography.Title>
-  );
-
-  const renderProviders = () => {
-    if (providers && providers.length > 0) {
-      return (
-        <>
-          {providers.map((provider) => {
-            if (provider.name === 'google') {
-              return (
-                <GoogleLogin
-                  key={provider.name}
-                  onSuccess={credentialResponse => {
-                    register({
-                      providerName: provider.name,
-                      credential: credentialResponse.credential
-                    })
-                  }}
-                  useOneTap={true}
-                  auto_select={true}
-                />);
-            }
-            return (
-              <Button
-                key={provider.name}
-                type="default"
-                block
-                icon={provider.icon}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  marginBottom: "8px",
-                }}
-                onClick={() => {
-                  register({ providerName: provider.name });
-                }}
-              >
-                {provider.label}
-              </Button>
-            );
-          })}
-          {!hideForm && (
-            <Divider>
-              <Typography.Text
-                style={{
-                  color: token.colorTextLabel,
-                }}
-              >
-                {translate("pages.login.divider", "or")}
-              </Typography.Text>
-            </Divider>
-          )}
-        </>
-      );
-    }
-    return null;
-  };
+  const PageTitle = (<AuthPageTitle title={title} />)
 
   const CardContent = (
-    <Card
-      title={CardTitle}
-      // headStyle={headStyles}
-      // bodyStyle={bodyStyles}
-      styles={{
-        body: bodyStyles,
-        header: headStyles
-      }}
-      style={{
-        ...containerStyles,
-        backgroundColor: token.colorBgElevated,
-      }}
-      {...(contentProps ?? {})}
+    <AuthCard
+      title={translate("pages.register.title", "Sign up for your account")}
+      contentProps={contentProps}
+      token={token}
     >
-      {renderProviders()}
+      <ProviderButtons
+        providers={providers}
+        login={register}
+        hideForm={hideForm}
+        dividerText={translate("pages.login.divider", "or")}
+        token={token}
+      />
       {!hideForm && (
         <Form<RegisterFormExtended>
           layout="vertical"
@@ -241,7 +134,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               {
                 pattern: passwordPattern,
                 message: (
-                  <div
+                  <Flex
                     style={{
                       maxWidth: `${passwordInputRef.current?.offsetWidth}px`,
                     }}
@@ -250,7 +143,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                       "pages.register.errors.passwordFormat",
                       passwordFormatError
                     )}
-                  </div>
+                  </Flex>
                 ),
               },
             ]}
@@ -302,7 +195,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             <Input.Password size="large" />
           </Form.Item>
 
-          <div
+          <Flex
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -320,18 +213,23 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                   "pages.login.buttons.haveAccount",
                   "Have an account?"
                 )}{" "}
-                <ActiveLink
+                <Link
                   style={{
                     fontWeight: "bold",
                     color: token.colorPrimaryTextHover,
                   }}
-                  to="/login"
+                  go={{
+                    to: {
+                      resource: "login",
+                      action: "list",
+                    },
+                  }}
                 >
                   {translate("pages.login.signin", "Sign in")}
-                </ActiveLink>
+                </Link>
               </Typography.Text>
             )}
-          </div>
+          </Flex>
           <Form.Item
             style={{
               marginBottom: 0,
@@ -350,7 +248,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
         </Form>
       )}
       {hideForm && loginLink !== false && (
-        <div
+        <Flex
           style={{
             marginTop: hideForm ? 16 : 8,
           }}
@@ -361,44 +259,37 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             }}
           >
             {translate("pages.login.buttons.haveAccount", "Have an account?")}{" "}
-            <ActiveLink
+            <Link
+              go={{
+                to: {
+                  resource: "login",
+                  action: "list",
+                },
+              }}
               style={{
                 fontWeight: "bold",
                 color: token.colorPrimaryTextHover,
               }}
-              to="/login"
             >
               {translate("pages.login.signin", "Sign in")}
-            </ActiveLink>
+            </Link>
           </Typography.Text>
-        </div>
+        </Flex>
       )}
-    </Card>
+    </AuthCard>
   );
 
   return (
-    <Layout style={layoutStyles} {...(wrapperProps ?? {})}>
-      <Row
-        justify="center"
-        align={hideForm ? "top" : "middle"}
-        style={{
-          padding: "16px 0",
-          minHeight: "100dvh",
-          paddingTop: hideForm ? "15dvh" : "16px",
-        }}
-      >
-        <Col xs={22}>
-          {renderContent ? (
-            renderContent(CardContent, PageTitle)
-          ) : (
-            <>
-              {PageTitle}
-              {CardContent}
-            </>
-          )}
-        </Col>
-      </Row>
-    </Layout>
+    <AuthLayout wrapperProps={wrapperProps}>
+      {renderContent ? (
+        renderContent(CardContent, PageTitle)
+      ) : (
+        <>
+          {PageTitle}
+          {CardContent}
+        </>
+      )}
+    </AuthLayout>
   );
 };
 

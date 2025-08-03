@@ -1,5 +1,6 @@
 export const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 export const passwordFormatError = "Password must be at least 8 characters and include uppercase, lowercase, and a number";
+import { createStyles } from "antd-style";
 
 type PasswordStrengthLabel = "Weak" | "Medium" | "Strong";
 
@@ -40,3 +41,33 @@ const strengthColor: Record<PasswordStrengthLabel, string> = {
   Medium: "#fa8c16",
   Strong: "#7cb305",
 };
+
+
+export const usePasswordStrengStyle = createStyles(({ css }) => {
+  return {
+    stepProgress: css`
+      margin-top: 4px;
+      width: 100%;
+
+      > div {
+        display: flex;
+        align-items: center;      
+
+        > div {
+          flex: 1;  
+          border-radius: 6px;
+          height: 4px !important;        
+        }
+
+        > span {
+          flex: 1;
+          width: auto !important;
+          flex-shrink: 0;
+          flex-grow: 0;    
+          font-size: 12px;
+          white-space: nowrap;
+        }
+      }
+    `,
+  };
+});

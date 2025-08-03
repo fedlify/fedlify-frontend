@@ -1,56 +1,35 @@
-import { CSSProperties } from "react"
-import { Route, Outlet } from "react-router";
+import { Route, Outlet, Navigate } from "react-router";
 import { ResourceProps, Authenticated } from "@refinedev/core";
 import { Flex, Button } from "antd";
 import { NavigateToResource } from "@refinedev/react-router";
 import { FedlifyLogo, SkyScene, AuthPage as AntdAuthPage, type AuthPageProps } from "../../components";
-import { useConfigProvider } from "../../contexts";
+// import { createStyles } from "antd-style";
 
 const RECAPTCHA_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string;
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
 
-const renderAuthContent = (content: React.ReactNode) => {
-  const theme = useConfigProvider();
-  const style: CSSProperties = {
-    width: '150px',
-  };
+// const useAuthStyle = createStyles(({ css, token, isDarkMode }) => ({
+//   button: css`
+//     width: 150px;
+//     color: ${isDarkMode ? 'black' : token.colorWhite};
+//   `,
+// }));
 
-  if (theme.mode === 'dark') {
-    style.color = 'black';
-  }
+const AuthPage: React.FC<AuthPageProps> = ({ type, formProps, reCaptchaKey, googleClientId, providers }) => {
+  const renderAuthContent = (content: React.ReactNode) => {
 
-  return (
-    <Flex
-      vertical
-      align="center"
-      gap={16}
-    >
-      <Button
-        color="default"
-        variant="filled"
-        style={style}
+    return (
+      <Flex
+        vertical
+        align="center"
+        gap={16}
       >
-        <FedlifyLogo
+        <Button
+          color="default"
+          variant="filled"
           style={{
-            width: 48,
-            height: 48,
-          }}
-          animated={false}
-        />
-        Fedlify
-      </Button>
-      {content}
-      {/* <Link to="/">
-        <Flex
-          align="center"
-          justify="center"
-          gap={12}
-          style={{
-            marginTop: 16,
-            paddingTop: 16,
-            paddingBottom: 8,
-            background: "white",
-            borderRadius: 100
+            width: 150,
+            color: 'black'
           }}
         >
           <FedlifyLogo
@@ -60,20 +39,13 @@ const renderAuthContent = (content: React.ReactNode) => {
             }}
             animated={false}
           />
-          <FedlifyLogoName
-            style={{
-              width: "100px",
-              height: "auto",
-            }}
-            animated={false}
-          />
-        </Flex>
-      </Link> */}
-    </Flex>
-  );
-};
+          Fedlify
+        </Button>
+        {content}
+      </Flex>
+    );
+  };
 
-const AuthPage: React.FC<AuthPageProps> = ({ type, formProps, reCaptchaKey, googleClientId, providers }) => {
   return (
     <AntdAuthPage
       type={type}
@@ -82,75 +54,57 @@ const AuthPage: React.FC<AuthPageProps> = ({ type, formProps, reCaptchaKey, goog
       reCaptchaKey={reCaptchaKey}
       googleClientId={googleClientId}
       providers={providers}
+      background={<SkyScene />}
     />
   );
 };
 
-const SectionWithBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <div style={{ position: "relative", width: "100%", minHeight: "100vh" }}>
-      {/* Background 3D Scene */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-        <SkyScene />
-      </div>
-      {children}
-    </div>
-  );
-}
-
+// see https://refine.dev/docs/routing/integrations/react-router/
 export const getRoute = (): React.ReactElement => {
   // The /forgot-password endpoint is rate-limited, so we can skip reCAPTCHA.
   // The /update-password flow requires a valid server-issued token (sent via email),
   // so we can safely bypass reCAPTCHA here as well.
   return (
     <Route
+      path="/auth"
       element={
         <Authenticated key="auth-pages" fallback={<Outlet />}>
           <NavigateToResource resource="dashboard" />
         </Authenticated>
       }
     >
+      {/* Redirect from /auth to /auth/login */}
+      <Route index element={<Navigate to="login" replace />} />
+
       <Route
-        path="/login"
+        path="login"
         element={
-          <SectionWithBackground>
-            <AuthPage
-              type="login"
-              reCaptchaKey={RECAPTCHA_KEY}
-              googleClientId={GOOGLE_CLIENT_ID}
-              providers={[{ name: "google" }]}
-            />
-          </SectionWithBackground>
+          <AuthPage
+            type="login"
+            reCaptchaKey={RECAPTCHA_KEY}
+            googleClientId={GOOGLE_CLIENT_ID}
+            providers={[{ name: "google" }]}
+          />
         }
       />
       <Route
-        path="/register"
+        path="register"
         element={
-          <SectionWithBackground>
-            <AuthPage
-              type="register"
-              reCaptchaKey={RECAPTCHA_KEY}
-              googleClientId={GOOGLE_CLIENT_ID}
-              providers={[{ name: "google" }]}
-            />
-          </SectionWithBackground>
+          <AuthPage
+            type="register"
+            reCaptchaKey={RECAPTCHA_KEY}
+            googleClientId={GOOGLE_CLIENT_ID}
+            providers={[{ name: "google" }]}
+          />
         }
       />
       <Route
-        path="/forgot-password"
-        element={
-          <SectionWithBackground>
-            <AuthPage type="forgotPassword" />
-          </SectionWithBackground>
-        }
+        path="forgot-password"
+        element={<AuthPage type="forgotPassword" />}
       />
       <Route
-        path="/update-password"
-        element={
-          <SectionWithBackground>
-            <AuthPage type="updatePassword" />
-          </SectionWithBackground>
-        }
+        path="update-password"
+        element={<AuthPage type="updatePassword" />}
       />
 
     </Route>
@@ -158,6 +112,36 @@ export const getRoute = (): React.ReactElement => {
   );
 }
 
+// see https://refine.dev/docs/routing/integrations/react-router/
 export const getResources = (): ResourceProps[] => {
-  return [];
+  return [
+    {
+      name: "register",
+      list: "auth/register",
+      meta: {
+        hide: true,
+      }
+    },
+    {
+      name: "login",
+      list: "auth/login",
+      meta: {
+        hide: true,
+      }
+    },
+    {
+      name: "forgot-password",
+      list: "auth/forgot-password",
+      meta: {
+        hide: true,
+      }
+    },
+    {
+      name: "update-password",
+      list: "auth/update-password",
+      meta: {
+        hide: true,
+      }
+    },
+  ];
 }

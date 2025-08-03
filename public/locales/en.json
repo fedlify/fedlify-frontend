@@ -1,11 +1,40 @@
 {
-    "documentTitle": {
-        "default": "Fedlify",
-        "suffix": " | Fedlify"
-    },
-    "pages": {
-        "home": {
-            "title": "Fedlify – Collaborate on AI development, without compromising data privacy."
-        }
-    }
+    "documentTitle.default": "Fedlify",
+    "documentTitle.suffix": " | Fedlify",
+    "pages.home.title": "Fedlify – Collaborate on AI development, without compromising data privacy.",
+    "pages.forgotPassword.title": "Forgot your password?",
+    "pages.forgotPassword.fields.email": "Email",
+    "pages.forgotPassword.errors.validEmail": "Invalid email address",
+    "pages.forgotPassword.resetLinkSent": "If your account was created using an email and password, we've sent a password reset link to your email address. If you signed up with Google, please sign in with your Google account instead.",
+    "pages.register.buttons.haveAccount": "Have an account? ",
+    "pages.login.signin": "Sign in",
+    "pages.forgotPassword.buttons.submit": "Send reset instructions",
+    "pages.login.errors.recaptchaNotReady": "CAPTCHA not yet ready. Please try again.",
+    "pages.login.errors.recaptchaFailed": "CAPTCHA failed. Please refresh and try again.",
+    "pages.login.title": "Sign in to your account",
+    "pages.login.divider": "or",
+    "pages.login.fields.email": "Email",
+    "pages.login.errors.validEmail": "Invalid email address",
+    "pages.login.fields.password": "Password",
+    "pages.login.buttons.rememberMe": "Remember me",
+    "pages.login.buttons.forgotPassword": "Forgot password?",
+    "pages.login.buttons.noAccount": "Don’t have an account?",
+    "pages.login.signup": "Sign up",
+    "pages.register.errors.recaptchaNotReady": "CAPTCHA not yet ready. Please try again.",
+    "pages.register.errors.recaptchaFailed": "CAPTCHA failed. Please refresh and try again.",
+    "pages.register.title": "Sign up for your account",
+    "pages.register.email": "Email",
+    "pages.register.errors.validEmail": "Invalid email address",
+    "pages.register.fields.email": "Email",
+    "pages.register.fields.password": "Password",
+    "pages.register.fields.confirmPassword": "Confirm Password",
+    "pages.register.errors.confirmPasswordRequired": "Please confirm your password",
+    "pages.register.errors.passwordsDoNotMatch": "Passwords do not match",
+    "pages.login.buttons.haveAccount": "Have an account?",
+    "pages.register.buttons.submit": "Sign up",
+    "pages.updatePassword.title": "Set new password",
+    "pages.updatePassword.fields.password": "New Password",
+    "pages.updatePassword.fields.confirmPassword": "Confirm New Password",
+    "pages.updatePassword.errors.confirmPasswordNotMatch": "Passwords do not match",
+    "pages.updatePassword.buttons.submit": "Update"
 }

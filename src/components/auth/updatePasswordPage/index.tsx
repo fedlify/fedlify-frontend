@@ -6,21 +6,7 @@ import {
   useTranslate,
   useUpdatePassword,
 } from "@refinedev/core";
-import { ThemedTitleV2 } from "@refinedev/antd";
 import {
-  layoutStyles,
-  containerStyles,
-  titleStyles,
-  headStyles,
-  bodyStyles,
-  useProgressStyle
-} from "./styles";
-import {
-  Row,
-  Col,
-  Layout,
-  Card,
-  Typography,
   Form,
   Input,
   Button,
@@ -32,7 +18,10 @@ import {
   Flex
 } from "antd";
 import { useLocation } from "react-router";
-import { getPasswordStrength, passwordPattern, passwordFormatError } from './password';
+import { AuthCard } from "../authCard";
+import { AuthLayout } from "../authLayout";
+import { AuthPageTitle } from "../authPageTitle";
+import { getPasswordStrength, passwordPattern, passwordFormatError, usePasswordStrengStyle } from "../passwordStrengthMeter";
 
 type UpdatePasswordProps = UpdatePasswordPageProps<LayoutProps, CardProps, FormProps>;
 type UpdatePasswordFormExtended = UpdatePasswordFormTypes & {
@@ -64,50 +53,17 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
       v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
     });
 
-  const passwordInputRef = useRef<HTMLDivElement>(null);
-  const { styles: progressStyle } = useProgressStyle();
+  const { styles: progressStyle } = usePasswordStrengStyle();
   const { score, label, color } = getPasswordStrength(Form.useWatch('password', form) ?? '');
+  const passwordInputRef = useRef<HTMLDivElement>(null);
 
-  const PageTitle =
-    title === false ? null : (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "32px",
-          fontSize: "20px",
-        }}
-      >
-        {title ?? <ThemedTitleV2 collapsed={false} />}
-      </div>
-    );
-
-  const CardTitle = (
-    <Typography.Title
-      level={3}
-      style={{
-        color: token.colorPrimaryTextHover,
-        ...titleStyles,
-      }}
-    >
-      {translate("pages.updatePassword.title", "Set new password")}
-    </Typography.Title>
-  );
+  const PageTitle = (<AuthPageTitle title={title} />)
 
   const CardContent = (
-    <Card
-      title={CardTitle}
-      // headStyle={headStyles}
-      // bodyStyle={bodyStyles}
-      styles={{
-        body: bodyStyles,
-        header: headStyles
-      }}
-      style={{
-        ...containerStyles,
-        backgroundColor: token.colorBgElevated,
-      }}
-      {...(contentProps ?? {})}
+    <AuthCard
+      title={translate("pages.updatePassword.title", "Set new password")}
+      contentProps={contentProps}
+      token={token}
     >
       <Form<UpdatePasswordFormTypes>
         layout="vertical"
@@ -206,30 +162,19 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
           </Button>
         </Form.Item>
       </Form>
-    </Card>
+    </AuthCard>
   );
 
   return (
-    <Layout style={layoutStyles} {...(wrapperProps ?? {})}>
-      <Row
-        justify="center"
-        align="middle"
-        style={{
-          padding: "16px 0",
-          minHeight: "100dvh",
-        }}
-      >
-        <Col xs={22}>
-          {renderContent ? (
-            renderContent(CardContent, PageTitle)
-          ) : (
-            <>
-              {PageTitle}
-              {CardContent}
-            </>
-          )}
-        </Col>
-      </Row>
-    </Layout>
+    <AuthLayout wrapperProps={wrapperProps}>
+      {renderContent ? (
+        renderContent(CardContent, PageTitle)
+      ) : (
+        <>
+          {PageTitle}
+          {CardContent}
+        </>
+      )}
+    </AuthLayout>
   );
 };
