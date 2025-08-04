@@ -1,12 +1,37 @@
 import { Route, Outlet, Navigate } from "react-router";
-import { ResourceProps, Authenticated } from "@refinedev/core";
+import { ResourceProps, useGo } from "@refinedev/core";
 import { Flex, Button } from "antd";
-import { NavigateToResource } from "@refinedev/react-router";
 import { FedlifyLogo, SkyScene, AuthPage as AntdAuthPage, type AuthPageProps } from "../../components";
-// import { createStyles } from "antd-style";
+import { createStyles } from "antd-style";
 
 const RECAPTCHA_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string;
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
+
+const useBackgroundStyle = createStyles(({ css }) => ({
+  container: css`
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+  `,
+  background: css`
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  `,
+}));
+
+const WithBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { styles } = useBackgroundStyle()
+  return (
+    <div className={styles.container}>
+      {/* Background 3D Scene */}
+      <div className={styles.background}>
+        <SkyScene />
+      </div>
+      {children}
+    </div>
+  );
+}
 
 // const useAuthStyle = createStyles(({ css, token, isDarkMode }) => ({
 //   button: css`
@@ -17,7 +42,7 @@ const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
 
 const AuthPage: React.FC<AuthPageProps> = ({ type, formProps, reCaptchaKey, googleClientId, providers }) => {
   const renderAuthContent = (content: React.ReactNode) => {
-
+    const go = useGo();
     return (
       <Flex
         vertical
@@ -31,6 +56,12 @@ const AuthPage: React.FC<AuthPageProps> = ({ type, formProps, reCaptchaKey, goog
             width: 150,
             color: 'black'
           }}
+          onClick={() => go({
+            to: {
+              resource: "home",
+              action: "list",
+            },
+          })}
         >
           <FedlifyLogo
             style={{
@@ -54,7 +85,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ type, formProps, reCaptchaKey, goog
       reCaptchaKey={reCaptchaKey}
       googleClientId={googleClientId}
       providers={providers}
-      background={<SkyScene />}
+    // background={<SkyScene />}
     />
   );
 };
@@ -68,9 +99,9 @@ export const getRoute = (): React.ReactElement => {
     <Route
       path="/auth"
       element={
-        <Authenticated key="auth-pages" fallback={<Outlet />}>
-          <NavigateToResource resource="dashboard" />
-        </Authenticated>
+        <WithBackground>
+          <Outlet />
+        </WithBackground>
       }
     >
       {/* Redirect from /auth to /auth/login */}
@@ -106,9 +137,7 @@ export const getRoute = (): React.ReactElement => {
         path="update-password"
         element={<AuthPage type="updatePassword" />}
       />
-
     </Route>
-
   );
 }
 

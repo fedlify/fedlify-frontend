@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Typography, Button, Card, Row, Col, Layout, Flex, Space, Avatar, Tag } from 'antd';
-import { motion, useScroll, useTransform, LayoutGroup } from "framer-motion";
+import { motion, useScroll, useTransform, LayoutGroup } from "motion/react";
 import { FedlifyLogo, FedlifyLogoName, FederatedSphere } from "../../../components";
 import { useStyles } from "./styled";
 import { Grid } from 'antd';
@@ -11,10 +11,9 @@ import Icon, {
     GithubOutlined,
     DiscordOutlined
 } from '@ant-design/icons';
+// import { useGo } from "@refinedev/core";
 
 const { useBreakpoint } = Grid;
-// import { Link } from "react-router";
-import { useNavigation } from "@refinedev/core";
 
 const { Title, Paragraph, Text, Link } = Typography;
 const { Footer } = Layout;
@@ -57,7 +56,7 @@ interface HeroSectionProps {
 };
 
 const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = false }) => {
-    const { push } = useNavigation();
+    // const go = useGo();
     const heroRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: heroRef,
@@ -167,9 +166,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = f
                                             <Button
                                                 color="default"
                                                 variant="outlined"
-                                                onClick={() => {
-                                                    push("dashboard");
-                                                }}
+                                            // onClick={() => go({
+                                            //     to: {
+                                            //         resource: "dashboard",
+                                            //         action: "list",
+                                            //     },
+                                            // })}
                                             >
                                                 Get Started
                                             </Button>

@@ -1,5 +1,4 @@
 # Logs
-<<<<<<< HEAD
 logs
 *.log
 npm-debug.log*
@@ -135,30 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-=======
 
-logs
-_.log
-npm-debug.log_
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-\*.local
-
-# Editor directories and files
-
-.vscode/_
-!.vscode/extensions.json
-.idea
-.DS_Store
-_.suo
-_.ntvs_
-_.njsproj
-_.sln
-\*.sw?
->>>>>>> 786373d (Initial commit from create-refine-app)
+yarn.lock
+pnpm-lock.yaml
+package-lock.json
+*lock*.yaml
+*lock*.json

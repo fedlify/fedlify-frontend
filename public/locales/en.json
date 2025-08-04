@@ -36,5 +36,10 @@
     "pages.updatePassword.fields.password": "New Password",
     "pages.updatePassword.fields.confirmPassword": "Confirm New Password",
     "pages.updatePassword.errors.confirmPasswordNotMatch": "Passwords do not match",
-    "pages.updatePassword.buttons.submit": "Update"
+    "pages.updatePassword.buttons.submit": "Update",
+    "pages.error.404": "Sorry, the page you visited does not exist.",
+    "pages.error.info": "You may have forgotten to add the \"{action}\" component to the \"{resource}\" resource.",
+    "pages.error.backHome": "Back Home",
+    "pages.error.backDashboard": "Back Dashboard",
+    "pages.error.invalidSlug": "The link you followed appears to be invalid or has expired."
 }

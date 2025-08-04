@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   useGo,
-  useResource,
-  useRouterType,
-  useNavigation,
   useTranslate,
 } from "@refinedev/core";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Button, Result, Typography, Space, Tooltip } from "antd";
+import { Button, Result, Typography } from "antd";
+import { useLocation } from "react-router";
 
 /**
  * When the app is navigated to a non-existent route, refine shows a default error page.
@@ -16,63 +13,59 @@ import { Button, Result, Typography, Space, Tooltip } from "antd";
  * @see {@link https://refine.dev/docs/packages/documentation/routers/} for more details.
  */
 export const PageNotFound: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState<string>();
   const translate = useTranslate();
-  const { push } = useNavigation();
   const go = useGo();
-  const routerType = useRouterType();
+  const location = useLocation();
 
-  const { resource, action } = useResource();
+  // Check if URL is clearly invalid (e.g. slug doesn't match known routes)
+  const isInvalidSlug = location.pathname.includes("invalid-link");
 
-  useEffect(() => {
-    if (resource) {
-      if (action) {
-        setErrorMessage(
-          translate(
-            "pages.error.info",
-            {
-              action: action,
-              resource: resource?.name,
-            },
-            `You may have forgotten to add the "${action}" component to "${resource?.name}" resource.`
-          )
-        );
-      }
-    }
-  }, [resource, action]);
+  const fallbackMessage = translate(
+    "pages.error.404",
+    "Sorry, the page you visited does not exist."
+  );
+
+  const invalidSlugMessage = translate(
+    "pages.error.invalidSlug",
+    "The link you followed appears to be invalid or has expired."
+  );
 
   return (
     <Result
       status="404"
       title="404"
-      extra={
-        <Space direction="vertical" size="large">
-          <Space>
-            <Typography.Text>
-              {translate(
-                "pages.error.404",
-                "Sorry, the page you visited does not exist."
-              )}
-            </Typography.Text>
-            {errorMessage && (
-              <Tooltip title={errorMessage}>
-                <InfoCircleOutlined data-testid="error-component-tooltip" />
-              </Tooltip>
-            )}
-          </Space>
-          <Button
-            type="primary"
-            onClick={() => {
-              if (routerType === "legacy") {
-                push("/");
-              } else {
-                go({ to: "/" });
-              }
-            }}
-          >
-            {translate("pages.error.backHome", "Back Home")}
-          </Button>
-        </Space>
+      subTitle={
+        <Typography.Text>
+          {isInvalidSlug ? invalidSlugMessage : fallbackMessage}
+        </Typography.Text>
+      }
+      extra={[
+        <Button
+          type="primary"
+          onClick={() => {
+            go({
+              to: {
+                resource: "home",
+                action: "list",
+              },
+            });
+          }}
+        >
+          {translate("pages.error.backHome", "Back Home")}
+        </Button>,
+        <Button
+          onClick={() => {
+            go({
+              to: {
+                resource: "login",
+                action: "list",
+              },
+            });
+          }}
+        >
+          {translate("pages.error.backDashboard", "Back Dashboard")}
+        </Button>
+      ]
       }
     />
   );

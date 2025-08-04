@@ -1,6 +1,5 @@
 import { Route, Outlet } from "react-router";
-import { ResourceProps } from "@refinedev/core";
-import { Authenticated } from "@refinedev/core";
+import { ResourceProps, Authenticated } from "@refinedev/core";
 import { ThemedLayoutV2 as AppThemedLayoutV2 } from "../../components";
 import { CatchAllNavigate } from "@refinedev/react-router";
 import { Card as AntdCard } from "antd";
@@ -19,7 +18,7 @@ export const getRoute = (): React.ReactElement => {
                     <AppThemedLayoutV2
                         // Title={Title}
                         initialSiderCollapsed={true}
-                        // onSiderCollapsed={() => { }}
+                    // onSiderCollapsed={() => { }}
                     >
                         <AntdCard
                             style={{

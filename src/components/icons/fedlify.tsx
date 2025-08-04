@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useAnimation, SVGMotionProps } from "framer-motion";
+import { motion, useAnimation, SVGMotionProps } from "motion/react";
 import { useEffect } from "react";
 
 // Type for Path props

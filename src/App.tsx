@@ -11,7 +11,7 @@ import { App as AntdApp } from "antd";
 import { PageNotFound } from "./components";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { ConfigProvider } from "./contexts";
-import { getRoute as getHomeRoute } from "./pages/home";
+import { getRoute as getHomeRoute, getResources as getHomeResources } from "./pages/home";
 import { getRoute as getAuthRoute, getResources as getAuthResources } from "./pages/auth";
 import { getRoute as getDashboardRoute, getResources as getDashboardResources } from "./pages/dashboard";
 import { useTranslation } from "react-i18next";
@@ -54,9 +54,9 @@ function App() {
                   projectId: "PysoNN-hXte4H-8HUuiy",
                 }}
                 resources={[
-                  ...getDashboardResources(),
-                  // ...getHomeResources(),
+                  ...getHomeResources(),
                   ...getAuthResources(),
+                  ...getDashboardResources(),
                 ]}
               >
                 <Routes>

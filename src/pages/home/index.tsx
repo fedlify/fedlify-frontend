@@ -1,23 +1,21 @@
 import { Route } from "react-router";
-// import { ResourceProps } from "@refinedev/core";
+import { ResourceProps } from "@refinedev/core";
 import HomePage from "./HomePage";
 
 // see https://refine.dev/docs/routing/integrations/react-router/
 export const getRoute = (): React.ReactElement => {
-    return <Route path="/" element={<HomePage />} />;
+    return <Route index path="/" element={<HomePage />} />;
 }
 
 // see https://refine.dev/docs/routing/integrations/react-router/
-// export const getResources = (): ResourceProps[] => {
-//     return [
-//         {
-//             name: "Home",
-//             list: "/",
-//             meta: {
-//                 name: "Home",
-//                 label: "Health AI Platform",
-//                 // icon: <DashboardOutlined />,
-//             },
-//         }
-//     ];
-// }
+export const getResources = (): ResourceProps[] => {
+    return [
+        {
+            name: "home",
+            list: "/",
+            meta: {
+                hide: true
+            },
+        }
+    ];
+}

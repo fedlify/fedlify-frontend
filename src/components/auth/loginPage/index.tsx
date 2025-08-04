@@ -203,6 +203,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                 "Don’t have an account?"
               )}{" "}
               <Link
+                // to="register"
                 go={{
                   to: {
                     resource: "register",

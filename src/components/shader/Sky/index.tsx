@@ -1,10 +1,10 @@
-import * as THREE from "three"
 import { useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Clouds, Cloud, /*CameraControls, Sky as SkyImpl*/ } from "@react-three/drei"
 import type { Group } from "three"
+import * as THREE from "three"
 
-export function SkyScene() {
+export const SkyScene: React.FC = () => {
     return (
         <Canvas camera={{ position: [0, -10, 6], fov: 75 }}>
             <Sky />
@@ -53,7 +53,7 @@ const Sky = () => {
             <group ref={ref}>
                 <Clouds material={THREE.MeshLambertMaterial} limit={400} range={80}>
                     <Cloud ref={cloud0} {...config} bounds={[x, y, z]} color={color} />
-                     <Cloud {...config} bounds={[x, y, z]} color="#eed0d0" seed={0.5} position={[15, 0, 0]} />
+                    <Cloud {...config} bounds={[x, y, z]} color="#eed0d0" seed={0.5} position={[15, 0, 0]} />
                     <Cloud {...config} bounds={[x, y, z]} color="#d0e0d0" seed={0.8} position={[-15, 0, 0]} />
                     <Cloud {...config} bounds={[x, y, z]} color="#a0b0d0" seed={0.9} position={[0, 0, -12]} />
                     <Cloud {...config} bounds={[x, y, z]} color="#c0c0dd" seed={1} position={[0, 0, 12]} />
