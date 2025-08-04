@@ -70,7 +70,7 @@ const GlobeNetworkScene: React.FC = () => {
 
                 // Animate the camera after drawing is complete
                 const targetZ = 3;
-                camera.position.z += (targetZ - camera.position.z) * 0.05;
+                camera.position.z += (targetZ - camera.position.z) * 0.008;
                 camera.lookAt(0, 0, 3);
             }
         }

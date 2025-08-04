@@ -11,7 +11,7 @@ import Icon, {
     GithubOutlined,
     DiscordOutlined
 } from '@ant-design/icons';
-// import { useGo } from "@refinedev/core";
+import { useGo } from "@refinedev/core";
 
 const { useBreakpoint } = Grid;
 
@@ -56,7 +56,7 @@ interface HeroSectionProps {
 };
 
 const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = false }) => {
-    // const go = useGo();
+    const go = useGo();
     const heroRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: heroRef,
@@ -121,7 +121,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = f
                             width: screens.lg ? 250 : 150,
                             height: "auto"
                         }}
-                        delay={1.8}
+                        delay={0.5}
                         isDarkMode={isDarkMode}
                     />
                     <Flex
@@ -135,7 +135,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = f
                                 width: "clamp(200px, 20vw, 350px)",
                                 height: "auto",
                             }}
-                            delay={2}
+                            delay={0.6}
                             isDarkMode={isDarkMode}
                         />
                         <Flex
@@ -148,30 +148,30 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = f
                                 <LayoutGroup>
                                     <FadeInTitle text="Unlock Precision Medicine."
                                         level={5}
-                                        delay={3} />
+                                        delay={0.8} />
                                     <FadeInTitle text="Collaborate Securely."
                                         level={5}
-                                        delay={3}
+                                        delay={0.8}
                                         style={{ marginTop: -8 }} />
                                     <FadeInTitle text="Democratize Health AI."
                                         level={5}
-                                        delay={3}
+                                        delay={0.8}
                                         style={{ marginTop: -8 }} />
                                     <motion.div
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.8, delay: 3.5 }}
+                                        transition={{ duration: 0.8, delay: 1 }}
                                     >
                                         <Space style={{ marginTop: 22 }}>
                                             <Button
                                                 color="default"
                                                 variant="outlined"
-                                            // onClick={() => go({
-                                            //     to: {
-                                            //         resource: "dashboard",
-                                            //         action: "list",
-                                            //     },
-                                            // })}
+                                                onClick={() => go({
+                                                    to: {
+                                                        resource: "dashboard",
+                                                        action: "list",
+                                                    },
+                                                })}
                                             >
                                                 Get Started
                                             </Button>
