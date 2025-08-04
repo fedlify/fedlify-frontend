@@ -50,13 +50,13 @@ const parseError = (
   fallback: { name?: string; message?: string } = {}
 ): AuthActionResponse => {
   const isParseError = !!error?.code;
-
+  
   return {
     success: false,
     error: {
       statusCode: error?.code,
       name: isParseError
-        ? error?.message
+        ? error?.message.replace(/\bParse\b/g, 'Fedlify')
         : error?.name || fallback.name || "Error",
       message: isParseError
         ? error?.name

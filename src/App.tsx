@@ -52,6 +52,10 @@ function App() {
                   warnWhenUnsavedChanges: true,
                   useNewQueryKeys: true,
                   projectId: "PysoNN-hXte4H-8HUuiy",
+                  title: {
+                    // icon?: React.ReactNode;
+                    // text?: React.ReactNode;
+                  }
                 }}
                 resources={[
                   ...getHomeResources(),
