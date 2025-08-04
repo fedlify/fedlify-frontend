@@ -149,7 +149,7 @@ const login = async ({
 
       await user.logIn({ context: { recaptchaToken, }, });
       // Set rememberMe flag (used for session cleanup if the tab is closed and rememberMe is false)
-      Parse.CoreManager.getStorageController()?.setItem?.(Parse.Storage.generatePath('rememberMe'), remember ? '1' : '0');
+      Parse.CoreManager.getStorageController()?.setItem?.(Parse.Storage.generatePath('rememberMe'), remember ? '1' : '0')
     }
     return { success: true, redirectTo: "/" };
   } catch (error: any) {

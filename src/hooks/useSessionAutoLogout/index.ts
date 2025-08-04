@@ -3,24 +3,31 @@ import Parse from "parse";
 
 export function useSessionAutoLogout() {
   useEffect(() => {
-    const storage = Parse.CoreManager.getStorageController();
-    const rememberPath = Parse.Storage.generatePath("rememberMe");
-
-    const handleBeforeUnload = async () => {
+    async function handleSessionLogic() {
       try {
-        const remember = await storage.getItemAsync?.(rememberPath);
-        if (remember !== "1") { // see authProvider
-          await Parse.User.logOut();
+        const session = await Parse.Session.current();
+        const createdWith = session.get("createdWith");
+        const provider = createdWith?.authProvider || "unknown";
+
+        const rememberMe = Parse.CoreManager
+          .getStorageController()
+          ?.getItem?.(Parse.Storage.generatePath("rememberMe"));
+
+        if (provider === "password" && rememberMe === "0") {
+          const createdAt = new Date(session.createdAt!).getTime();
+          const now = Date.now();
+          const elapsedMs = now - createdAt;
+          const oneDayMs = 24 * 60 * 60 * 1000;
+
+          if (elapsedMs > oneDayMs) {
+            await Parse.User.logOut();
+          }
         }
-      } catch (error) {
-        console.warn("Auto logout failed:", error);
+      } catch (err) {
+        console.warn("Session check failed:", err);
       }
-    };
+    }
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    handleSessionLogic();
   }, []);
 }
