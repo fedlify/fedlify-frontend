@@ -11,7 +11,7 @@ import Icon, {
     GithubOutlined,
     DiscordOutlined
 } from '@ant-design/icons';
-import { useGo } from "@refinedev/core";
+import { platformAppUrl } from "../../config/platform";
 
 const { useBreakpoint } = Grid;
 
@@ -56,7 +56,6 @@ interface HeroSectionProps {
 };
 
 const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = false }) => {
-    const go = useGo();
     const heroRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: heroRef,
@@ -166,17 +165,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroClassName, isDarkMode = f
                                             <Button
                                                 color="default"
                                                 variant="outlined"
-                                                onClick={() => go({
-                                                    to: {
-                                                        resource: "dashboard",
-                                                        action: "list",
-                                                    },
-                                                })}
+                                                href={`${platformAppUrl}/register`}
                                             >
                                                 Get Started
                                             </Button>
-                                            <Button color="default" variant="filled">
-                                                Request a demo
+                                            <Button color="default" variant="filled" href={`${platformAppUrl}/signin`}>
+                                                Sign In
                                             </Button>
                                         </Space>
                                     </motion.div>
